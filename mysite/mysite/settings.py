@@ -25,7 +25,7 @@ SECRET_KEY = '^v*&fnln4s0=k&8o&n(-3nm_kxz#e-o+dlfl*q&x_$86198owe'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['victorlee.cn']
+ALLOWED_HOSTS = ['victorlee.cn','www.victorlee.cn']
 
 
 # Application definition
