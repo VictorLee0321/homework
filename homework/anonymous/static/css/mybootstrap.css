@@ -1,0 +1,100 @@
+@CHARSET "UTF-8";
+
+.navbar .navbar-collapse .pull-right {
+	line-height: 50px;
+}
+
+#checkIDAndName {
+	color: red;
+	line-height: 30px;
+	display: none;
+}
+
+#checkLearnComm {
+	color: red;
+	line-height: 30px;
+	display: none;
+}
+
+#signinModal {
+	margin-top: 12%;
+}
+
+#locateModal {
+	margin-top: 10%;
+}
+
+#userModal {
+	margin-top: 9%;
+}
+
+#afterStudentLogin {
+	margin-top: 6%;
+	display: none;
+}
+
+#afterCicosLogin {
+	margin-top: 6%;
+	display: none;
+}
+
+#cicos_send_all_email {
+	display: none;
+}
+
+#div_issue_homework {
+	display: none;
+}
+
+#div_add_student {
+	display: none;
+}
+
+#check_psw {
+	color: red;
+	text-align: center;
+}
+
+#check_psw_div {
+	display: none;
+}
+
+#change_psw {
+	color: red;
+	text-align: center;
+}
+
+#change_psw_div {
+	display: none;
+}
+
+#logout {
+	display: none;
+}
+
+#user {
+	display: none;
+}
+
+#course {
+	padding: 0px;
+}
+
+#course-div {
+	padding-left: 6px;
+	padding-right: 0px;
+}
+
+#student_panel_heading {
+	text-align: center;
+	font-weight: bold;
+	color: black;
+}
+
+thead tr th, #tbody tr td/* :first-child, td:nth-child(5) */ {
+	text-align: center;
+}
+
+#cicos_check_tbody,#tbody_add_student tr td {
+	text-align: center;
+}
