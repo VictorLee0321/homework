@@ -20,7 +20,6 @@
 	<link rel="shortcut icon" href="{% static "img/hw.jpg" %}">
 </head>
 <body>
-
 	<div class="navbar navbar-inverse navbar-static-top">
 		<div class="navbar-header">
 			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -36,7 +35,7 @@
 				<li><a href="http://victorlee.cn"><b>Tips</b></a></li>
 			</ul>
 			<div class="pull-right">
-				<a class="btn btn-sm btn-success" id="locate" data-toggle="modal" href="#locateModal" data-keyboard="true"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;&nbsp;<b id="location">Locate</b></a><!--<b id="location">Locate</b>-->
+				<a class="btn btn-sm btn-success" id="locate" data-toggle="modal" href="#locateModal" data-keyboard="true"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;&nbsp;<b id="location">Locate</b></a>
 				<a class="btn btn-sm btn-warning" id="signup" data-toggle="modal" href="#signupModal" data-keyboard="true">Sign Up Free</a>
 				<a class="btn btn-sm btn-primary" id="signin" data-toggle="modal" href="#signinModal" data-keyboard="true"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Sign In</a>
 				<a class="btn btn-sm btn-danger" id="logout"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Log Out</a>
@@ -44,27 +43,278 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="col-md-4" style="margin-top: 4%; padding-right: 0px; margin-right: 0px">
-		<div class="list-group col-md-8 col-md-offset-2">
-			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+	<!-- while cicos login begin -->
+	<div id="afterCicosLogin">
+		<div class="col-md-2 col-md-offset-1">
+			<ol class="nav nav-pills nav-stacked">
+				<li class="btn btn-info"><a style="color:black;font-weight:bold;" id="btn_check_homework">查询作业</a></li>
+				<li class="btn btn-warning"><a style="color:black;font-weight:bold;" id="btn_issue_homework">发布作业</a></li>
+				<li class="btn btn-success"><a style="color:black;font-weight:bold;" id="btn_add_student">录入学生</a></li>
+				<li class="btn btn-danger"><a style="color:black;font-weight:bold;" id="btn_add_cicos">添加学委</a></li>
+			</ol>
+		</div>
+		<div class="col-md-8" id="div_check_homework">
+				<div class="col-md-offset-1">
+					<!--面板-->
+						<div class="panel panel-default">
+							<!-- panel-heading begin -->
+							<div class="panel-heading">
+								<div class="row">
+									<!--下拉菜单-->
+									<div class="col-md-4" id="check_course_div">
+										<select class="form-control" id="check_course">
+											<option>专业课程</option>
+											<option>JAVA应用技术</option>
+											<option>计算机图形学</option>
+											<option>管理信息系统</option>
+										</select>
+									</div>
+									<div class="col-md-3" id="check_exp_div">
+										<select class="form-control" id="check_exp">
+											<option>作业号</option>
+											<option>实验一</option>
+											<option>实验二</option>
+											<option>实验三</option>
+										</select>
+									</div>
+									<div class="col-md-3" id="check_status_div">
+										<select class="form-control" id="check_status">
+											<!-- <option value="title">作业情况</option> -->
+											<option value="0">已交</option>
+											<option value="1">未交</option>
+											<option value="2">补交</option>
+										</select>
+									</div>
+									<div class="col-md-1 col-md-offset-1" id="check_click_div">
+										<button type="button" id="btn_check_click" class="btn btn-sm btn-info" style="line-height:22px;">
+											<span class="glyphicon glyphicon-search"></span>
+										</button>
+									</div>
+									<!--下拉菜单-->
+								</div>
+								<!-- panel-heading-row end -->
+							</div>
+							<!-- panel-heading end -->
+							<div class="panel-body" style="padding-bottom:0px">
+								<!--Panel content-->
+								<table class="table table-bordered table-hover">
+									<thead id="cicos_check_thead">
+										<tr>
+											<th></th>
+											<th>文件名</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="cicos_check_tbody">
+										<tr>
+											<td><input type="checkbox"></td>
+											<td>201321314315-李明钊-信计133班-JAVA应用技术-作业2.doc</td>
+											<td>
+												<button type="button" id="btn_down" class="btn btn-xs">
+													<span class="glyphicon glyphicon-download"></span>
+												</button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<!--Panel content-->
+							</div>
+							<div class="panel-footer">
+								<div class="col-md-4"></div>
+								<div style="display:inline-block;height:30px;">
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><a style="height:30px;" id="cicos_previous_page"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+									</ul>
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><span style="height:30px;" id="cicos_page_num"><b>1</b></span></li>
+									</ul>
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><a style="height:30px;" id="cicos_next_page"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+									</ul>
+								</div>
+								<button type="button" id="cicos_check_download" class="btn btn-sm btn-warning" style="margin-top:-23px;">
+									download&nbsp;all&nbsp;<span class="glyphicon glyphicon-download"></span>
+								</button>
+								<button type="button" id="cicos_send_all_email" class="btn btn-sm btn-warning" style="margin-top:-23px;">
+									send&nbsp;all&nbsp;email&nbsp;<span class="glyphicon glyphicon-envelope"></span>
+								</button>
+							</div>
+						</div>
+					<!--面板-->
+				</div>
+		</div>
+		<div class="col-md-8" id="div_issue_homework">
+				<div class="col-md-offset-1">
+						<div class="modal-body">
+							<div class="form-horizontal">
+								<div class="form-group">
+									<label class="control-label col-md-2" for="issue_course_name">课&nbsp;&nbsp;&nbsp;程&nbsp;&nbsp;&nbsp;名:</label>
+									<div class="col-md-9">
+										<input type="text" class="form-control" id="issue_course_name" placeholder="请输入课程名">
+									</div>
+								</div>
+								<div class="form-group">
+									<label  class="control-label col-md-2" for="issue_exp_num">作&nbsp;&nbsp;&nbsp;业&nbsp;&nbsp;&nbsp;号:</label>
+									<div class="col-md-9">
+										<input type="text" class="form-control" id="issue_exp_num" placeholder="请输入作业号(请用阿拉伯数字表示)">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-2" for="issue_last_time">截&nbsp;&nbsp;&nbsp;止&nbsp;&nbsp;&nbsp;日:</label>
+									<div class="col-md-9 input-append date" id="datetimepicker" data-date="10-01-2016" data-date-format="yyyy-mm-dd hh:ii:ss">
+										<input type="text" class="span2 form-control" id="issue_last_time" value="2016-10-01 21:30:00">
+										<span class="add-on"><i class="icon-remove"></i></span>
+										<span class="add-on"><i class="icon-th"></i></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div id="sure_add_tips_div" align="center" style="display: none;">
+										<p>
+											<span id="sure_add_tips" style="color: red;">添加失败，请重试</span>
+										</p>
+									</div>
+									<div class="col-md-offset-2 col-md-7"></div>
+									<div>
+										<button type="button" id="sure_issue_course" class="btn btn-sm btn-success">
+											保存课程&nbsp;<span class="glyphicon glyphicon-ok-sign"></span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+				<div class="col-md-1"></div>
+		</div>
+		<div class="col-md-8" id="div_add_student">
+				<div class="col-md-offset-1">
+					<div class="panel panel-default">
+							<!-- panel-heading begin -->
+							<div class="panel-heading">
+								<p>excel表导入格式前四行如下:</p>
+							</div>
+							<!-- panel-heading end -->
+							<div class="panel-body" style="padding-bottom:0px">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th>学号</th>
+											<th>姓名</th>
+										</tr>
+									</thead>
+									<tbody id="tbody_add_student">
+										<tr>
+											<td>123456789012</td>
+											<td>某某某</td>
+										</tr>
+										<tr>
+											<td>987654321098</td>
+											<td>某某</td>
+										</tr>
+										<tr>
+											<td>123456789012</td>
+											<td>某某某</td>
+										</tr>
+										<tr>
+											<td colspan="2" style="color:red;">注意：目前还不支持2007版的excel，只支持2003的版本</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="panel-footer" style="height:50px;">
+								<div class="col-md-8">
+										<input type="file" name="xls_file" id="xls_file" style="width:250px;">
+								</div>
+								<div class="col-md-2" id="div_xls_tips">
+									<span id="xls_tips"></span>
+								</div>
+								<div class="col-md-2">
+									<button type="button" id="xls_upload" class="btn btn-xs">
+										upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+									</button>
+								</div>
+							</div>
+					</div>
+				</div>
+				<div class="col-md-2"></div>
 		</div>
 	</div>
-
-	<!-- anonymous upload file begin -->
-	<section id="main" class="col-md-4">
-		<div class="container col-md-12">
-			<div class="row col-md-12">
-				<!--<div class="col-md-12">-->
+	<!-- while cicos login end -->
+	<!-- while student login begin -->
+	<div id="afterStudentLogin">
+		<div class="col-md-2 col-md-offset-1">
+			<ol class="nav nav-pills nav-stacked">
+				<li class="btn btn-warning"><a style="color:black;font-weight:bold;" id="btn_unsubmit_homework">未交作业</a></li>
+				<li class="btn btn-info"><a style="color:black;font-weight:bold;" id="btn_class_homework">班级作业</a></li>
+				<li class="btn btn-danger"><a style="color:black;font-weight:bold;" id="btn_overtime_homework">超期作业</a></li>
+				<li class="btn btn-success"><a style="color:black;font-weight:bold;" id="btn_submited_homework">已交作业</a></li>
+			</ol>
+		</div>
+		<div class="col-md-8">
+			<div class="panel panel-info">
+							<!-- panel-heading begin -->
+							<div class="panel-heading">
+								<h4 id="student_panel_heading">点击查询</h4>
+							</div>
+							<!-- panel-heading end -->
+							<div class="panel-body" style="padding-bottom:0px">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th></th>
+											<th>课程名</th>
+											<th>作业号</th>
+											<th>截止时间&nbsp;
+												<button type="button" id="btn_overtime" class="btn btn-xs">
+													<span class="glyphicon glyphicon-refresh"></span>
+												</button>
+											</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="tbody">
+										<!-- <tr>
+											<td><input type="checkbox"></td>
+											<td>JAVA应用技术</td>
+											<td>三</td>
+											<td>2016-08-01 00:00:00</td>
+											<td>
+												<button type="button" id="btn_upload" class="btn btn-xs">
+													<span class="glyphicon glyphicon-upload"></span>
+												</button>
+											</td>
+										</tr> -->
+									</tbody>
+								</table>
+							</div>
+							<div class="panel-footer">
+								<div class="col-md-4"></div>
+								<button type="button" id="student_all_check" class="btn btn-sm" style="margin-top:-23px;">
+									all&nbsp;<span class="glyphicon glyphicon-check"></span>
+								</button>
+								<div style="display:inline-block;height:30px;">
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><a style="height:30px;" id="previous_page"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+									</ul>
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><span style="height:30px;" id="page_num"><b>1</b></span></li>
+									</ul>
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><a style="height:30px;" id="next_page"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+									</ul>
+								</div>
+								<button type="button" id="student_check_download" class="btn btn-sm" style="margin-top:-23px;">
+									down&nbsp;<span class="glyphicon glyphicon-download"></span>
+								</button>
+							</div>
+						</div>
+		</div>
+	</div>
+	<!-- while student login end -->
+	<section id="main">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4">
 					<!--面板-->
 					<form action="#" method="post" enctype="multipart/form-data;charset=utf-8" id="myform">
 						<!-- upload -->
@@ -83,7 +333,7 @@
 									</div>
 									<div class="col-md-4" id="exp-div">
 										<select class="form-control" id="exp">
-											<option>作业</option>
+											<option>作业号</option>
 											<option>实验一</option>
 											<option>实验二</option>
 											<option>实验三</option>
@@ -128,29 +378,11 @@
 						</div>
 						<!--面板-->
 					</form>
-				<!--</div>-->
-				<!--<div class="col-md-4"></div>-->
+				</div>
+				<div class="col-md-4"></div>
 			</div>
 		</div>
-		<!-- container end -->
 	</section>
-	<!-- anonymous upload file end -->
-
-	<div class="col-md-4" style="margin-top: 4%; margin-left: 0px; padding-left: 0px">
-		<div class="list-group col-md-8 col-md-offset-2">
-			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
-		</div>
-	</div>
-
 	<footer class="modal-footer" style="padding:2px">
 		<div class="container">
 			<div class="row">
@@ -162,274 +394,6 @@
 			</div>
 		</div>
 	</footer>
-
-<!-- while cicos login begin -->
-<div id="afterCicosLogin">
-	<div class="col-md-2 col-md-offset-1">
-		<ol class="nav nav-pills nav-stacked">
-			<li class="btn btn-info"><a style="color:black;font-weight:bold;" id="btn_check_homework">查询作业</a></li>
-			<li class="btn btn-warning"><a style="color:black;font-weight:bold;" id="btn_issue_homework">发布作业</a></li>
-			<li class="btn btn-success"><a style="color:black;font-weight:bold;" id="btn_add_student">录入学生</a></li>
-			<li class="btn btn-danger"><a style="color:black;font-weight:bold;" id="btn_add_cicos">添加学委</a></li>
-		</ol>
-	</div>
-	<div class="col-md-8" id="div_check_homework">
-			<div class="col-md-offset-1">
-				<!--面板-->
-					<div class="panel panel-default">
-						<!-- panel-heading begin -->
-						<div class="panel-heading">
-							<div class="row">
-								<!--下拉菜单-->
-								<div class="col-md-4" id="check_course_div">
-									<select class="form-control" id="check_course">
-										<option>专业课程</option>
-										<option>JAVA应用技术</option>
-										<option>计算机图形学</option>
-										<option>管理信息系统</option>
-									</select>
-								</div>
-								<div class="col-md-3" id="check_exp_div">
-									<select class="form-control" id="check_exp">
-										<option>作业号</option>
-										<option>实验一</option>
-										<option>实验二</option>
-										<option>实验三</option>
-									</select>
-								</div>
-								<div class="col-md-3" id="check_status_div">
-									<select class="form-control" id="check_status">
-										<!-- <option value="title">作业情况</option> -->
-										<option value="0">已交</option>
-										<option value="1">未交</option>
-										<option value="2">补交</option>
-									</select>
-								</div>
-								<div class="col-md-1 col-md-offset-1" id="check_click_div">
-									<button type="button" id="btn_check_click" class="btn btn-sm btn-info" style="line-height:22px;">
-										<span class="glyphicon glyphicon-search"></span>
-									</button>
-								</div>
-								<!--下拉菜单-->
-							</div>
-							<!-- panel-heading-row end -->
-						</div>
-						<!-- panel-heading end -->
-						<div class="panel-body" style="padding-bottom:0px">
-							<!--Panel content-->
-							<table class="table table-bordered table-hover">
-								<thead id="cicos_check_thead">
-									<tr>
-										<th></th>
-										<th>文件名</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody id="cicos_check_tbody">
-									<tr>
-										<td><input type="checkbox"></td>
-										<td>201321314315-李明钊-信计133班-JAVA应用技术-作业2.doc</td>
-										<td>
-											<button type="button" id="btn_down" class="btn btn-xs">
-												<span class="glyphicon glyphicon-download"></span>
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							<!--Panel content-->
-						</div>
-						<div class="panel-footer">
-							<div class="col-md-4"></div>
-							<div style="display:inline-block;height:30px;">
-								<ul class="pagination" style="margin:0px;height:30px;">
-									<li><a style="height:30px;" id="cicos_previous_page"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-								</ul>
-								<ul class="pagination" style="margin:0px;height:30px;">
-									<li><span style="height:30px;" id="cicos_page_num"><b>1</b></span></li>
-								</ul>
-								<ul class="pagination" style="margin:0px;height:30px;">
-									<li><a style="height:30px;" id="cicos_next_page"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-								</ul>
-							</div>
-							<button type="button" id="cicos_check_download" class="btn btn-sm btn-warning" style="margin-top:-23px;">
-								download&nbsp;all&nbsp;<span class="glyphicon glyphicon-download"></span>
-							</button>
-							<button type="button" id="cicos_send_all_email" class="btn btn-sm btn-warning" style="margin-top:-23px;">
-								send&nbsp;all&nbsp;email&nbsp;<span class="glyphicon glyphicon-envelope"></span>
-							</button>
-						</div>
-					</div>
-				<!--面板-->
-			</div>
-	</div>
-	<div class="col-md-8" id="div_issue_homework">
-			<div class="col-md-offset-1">
-					<div class="modal-body">
-						<div class="form-horizontal">
-							<div class="form-group">
-								<label class="control-label col-md-2" for="issue_course_name">课&nbsp;&nbsp;&nbsp;程&nbsp;&nbsp;&nbsp;名:</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" id="issue_course_name" placeholder="请输入课程名">
-								</div>
-							</div>
-							<div class="form-group">
-								<label  class="control-label col-md-2" for="issue_exp_num">作&nbsp;&nbsp;&nbsp;业&nbsp;&nbsp;&nbsp;号:</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" id="issue_exp_num" placeholder="请输入作业号(请用阿拉伯数字表示)">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-2" for="issue_last_time">截&nbsp;&nbsp;&nbsp;止&nbsp;&nbsp;&nbsp;日:</label>
-								<div class="col-md-9 input-append date" id="datetimepicker" data-date="10-01-2016" data-date-format="yyyy-mm-dd hh:ii:ss">
-									<input type="text" class="span2 form-control" id="issue_last_time" value="2016-10-01 21:30:00">
-									<span class="add-on"><i class="icon-remove"></i></span>
-									<span class="add-on"><i class="icon-th"></i></span>
-								</div>
-							</div>
-							<div class="form-group">
-								<div id="sure_add_tips_div" align="center" style="display: none;">
-									<p>
-										<span id="sure_add_tips" style="color: red;">添加失败，请重试</span>
-									</p>
-								</div>
-								<div class="col-md-offset-2 col-md-7"></div>
-								<div>
-									<button type="button" id="sure_issue_course" class="btn btn-sm btn-success">
-										保存课程&nbsp;<span class="glyphicon glyphicon-ok-sign"></span>
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-			</div>
-			<div class="col-md-1"></div>
-	</div>
-	<div class="col-md-8" id="div_add_student">
-			<div class="col-md-offset-1">
-				<div class="panel panel-default">
-						<!-- panel-heading begin -->
-						<div class="panel-heading">
-							<p>excel表导入格式前四行如下:</p>
-						</div>
-						<!-- panel-heading end -->
-						<div class="panel-body" style="padding-bottom:0px">
-							<table class="table table-bordered table-hover">
-								<thead>
-									<tr>
-										<th>学号</th>
-										<th>姓名</th>
-									</tr>
-								</thead>
-								<tbody id="tbody_add_student">
-									<tr>
-										<td>123456789012</td>
-										<td>某某某</td>
-									</tr>
-									<tr>
-										<td>987654321098</td>
-										<td>某某</td>
-									</tr>
-									<tr>
-										<td>123456789012</td>
-										<td>某某某</td>
-									</tr>
-									<tr>
-										<td colspan="2" style="color:red;">注意：目前还不支持2007版的excel，只支持2003的版本</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="panel-footer" style="height:50px;">
-							<div class="col-md-8">
-									<input type="file" name="xls_file" id="xls_file" style="width:250px;">
-							</div>
-							<div class="col-md-2" id="div_xls_tips">
-								<span id="xls_tips"></span>
-							</div>
-							<div class="col-md-2">
-								<button type="button" id="xls_upload" class="btn btn-xs">
-									upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
-								</button>
-							</div>
-						</div>
-				</div>
-			</div>
-			<div class="col-md-2"></div>
-	</div>
-</div>
-<!-- while cicos login end -->
-<!-- while student login begin -->
-<div id="afterStudentLogin">
-	<div class="col-md-2 col-md-offset-1">
-		<ol class="nav nav-pills nav-stacked">
-			<li class="btn btn-warning"><a style="color:black;font-weight:bold;" id="btn_unsubmit_homework">未交作业</a></li>
-			<li class="btn btn-info"><a style="color:black;font-weight:bold;" id="btn_class_homework">班级作业</a></li>
-			<li class="btn btn-danger"><a style="color:black;font-weight:bold;" id="btn_overtime_homework">超期作业</a></li>
-			<li class="btn btn-success"><a style="color:black;font-weight:bold;" id="btn_submited_homework">已交作业</a></li>
-		</ol>
-	</div>
-	<div class="col-md-8">
-		<div class="panel panel-info">
-						<!-- panel-heading begin -->
-						<div class="panel-heading">
-							<h4 id="student_panel_heading">点击查询</h4>
-						</div>
-						<!-- panel-heading end -->
-						<div class="panel-body" style="padding-bottom:0px">
-							<table class="table table-bordered table-hover">
-								<thead>
-									<tr>
-										<th></th>
-										<th>课程名</th>
-										<th>作业号</th>
-										<th>截止时间&nbsp;
-											<button type="button" id="btn_overtime" class="btn btn-xs">
-												<span class="glyphicon glyphicon-refresh"></span>
-											</button>
-										</th>
-										<th></th>
-									</tr>
-								</thead>
-								<tbody id="tbody">
-									<!-- <tr>
-										<td><input type="checkbox"></td>
-										<td>JAVA应用技术</td>
-										<td>三</td>
-										<td>2016-08-01 00:00:00</td>
-										<td>
-											<button type="button" id="btn_upload" class="btn btn-xs">
-												<span class="glyphicon glyphicon-upload"></span>
-											</button>
-										</td>
-									</tr> -->
-								</tbody>
-							</table>
-						</div>
-						<div class="panel-footer">
-							<div class="col-md-4"></div>
-							<button type="button" id="student_all_check" class="btn btn-sm" style="margin-top:-23px;">
-								all&nbsp;<span class="glyphicon glyphicon-check"></span>
-							</button>
-							<div style="display:inline-block;height:30px;">
-								<ul class="pagination" style="margin:0px;height:30px;">
-									<li><a style="height:30px;" id="previous_page"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-								</ul>
-								<ul class="pagination" style="margin:0px;height:30px;">
-									<li><span style="height:30px;" id="page_num"><b>1</b></span></li>
-								</ul>
-								<ul class="pagination" style="margin:0px;height:30px;">
-									<li><a style="height:30px;" id="next_page"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-								</ul>
-							</div>
-							<button type="button" id="student_check_download" class="btn btn-sm" style="margin-top:-23px;">
-								down&nbsp;<span class="glyphicon glyphicon-download"></span>
-							</button>
-						</div>
-					</div>
-	</div>
-</div>
-<!-- while student login end -->
 <!--locate modal begin-->
 <div class="modal fade" id="locateModal" role="dialog">
 	<div class="modal-dialog">

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <!--signup modal begin-->
+<div class="modal fade" id="signupModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">注册</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group has-feedback">
+							<label class="control-label col-md-2" for="account">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+							<div class="col-md-9"><!--add has-error Class-->
+								<input type="text" class="form-control" id="account" placeholder="请输入账号">
+								<span id="feedbackAccount" class="glyphicon glyphicon-remove form-control-feedback sr-only" aria-hidden="true"></span><!--remove sr-only Class-->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="studentID">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="studentID" placeholder="请输入学号">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="type">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:</label>
+							<div class="col-md-3">
+								<select class="form-control" id="type">
+									<option>学&nbsp;&nbsp;&nbsp;&nbsp;生</option>
+									<option>学&nbsp;&nbsp;&nbsp;&nbsp;委</option>
+								</select>
+							</div>
+							<div class="col-md-offset-3 col-md-3">
+								<span id="checkLearnComm" class="glyphicon glyphicon-remove">此学生不是学委</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label  class="control-label col-md-2" for="name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="name" placeholder="请输入姓名">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="sex">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</label>
+							<div class="col-md-2">
+								<select class="form-control" id="sex">
+									<option>男</option>
+									<option>女</option>
+								</select>
+							</div>
+							<div class="col-md-offset-4 col-md-3">
+								<span id="checkIDAndName" class="glyphicon glyphicon-menu-down">学号姓名不匹配</span>
+								<!--removeClass("glyphicon-menu-up") addClass("glyphicon-menu-down")-->
+								<!--html("两次密码不一致")-->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="psw">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" id="psw" placeholder="请输入密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="psw2">确认密码:</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" id="psw2" placeholder="请确认密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="email">邮箱认证:</label>
+							<div class="col-md-7">
+								<input type="text" class="form-control" id="email" placeholder="请输入邮箱">
+							</div>
+							<div class="col-md-2">
+								<button id="sendCode" class="btn btn-sm btn-default"><b>验证邮箱</b></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button id="btnRegister" type="button" class="btn btn-success" data-dismiss="modal"><b>立即注册</b></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--signup modal end-->
+
+</body>
+</html>

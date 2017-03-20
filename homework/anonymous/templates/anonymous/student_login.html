@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <!-- while student login begin -->
+	<div id="afterStudentLogin">
+		<div class="col-md-2 col-md-offset-1">
+			<ol class="nav nav-pills nav-stacked">
+				<li class="btn btn-warning"><a style="color:black;font-weight:bold;" id="btn_unsubmit_homework">未交作业</a></li>
+				<li class="btn btn-info"><a style="color:black;font-weight:bold;" id="btn_class_homework">班级作业</a></li>
+				<li class="btn btn-danger"><a style="color:black;font-weight:bold;" id="btn_overtime_homework">超期作业</a></li>
+				<li class="btn btn-success"><a style="color:black;font-weight:bold;" id="btn_submited_homework">已交作业</a></li>
+			</ol>
+		</div>
+		<div class="col-md-8">
+			<div class="panel panel-info">
+							<!-- panel-heading begin -->
+							<div class="panel-heading">
+								<h4 id="student_panel_heading">点击查询</h4>
+							</div>
+							<!-- panel-heading end -->
+							<div class="panel-body" style="padding-bottom:0px">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th></th>
+											<th>课程名</th>
+											<th>作业号</th>
+											<th>截止时间&nbsp;
+												<button type="button" id="btn_overtime" class="btn btn-xs">
+													<span class="glyphicon glyphicon-refresh"></span>
+												</button>
+											</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody id="tbody">
+										<!-- <tr>
+											<td><input type="checkbox"></td>
+											<td>JAVA应用技术</td>
+											<td>三</td>
+											<td>2016-08-01 00:00:00</td>
+											<td>
+												<button type="button" id="btn_upload" class="btn btn-xs">
+													<span class="glyphicon glyphicon-upload"></span>
+												</button>
+											</td>
+										</tr> -->
+									</tbody>
+								</table>
+							</div>
+							<div class="panel-footer">
+								<div class="col-md-4"></div>
+								<button type="button" id="student_all_check" class="btn btn-sm" style="margin-top:-23px;">
+									all&nbsp;<span class="glyphicon glyphicon-check"></span>
+								</button>
+								<div style="display:inline-block;height:30px;">
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><a style="height:30px;" id="previous_page"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+									</ul>
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><span style="height:30px;" id="page_num"><b>1</b></span></li>
+									</ul>
+									<ul class="pagination" style="margin:0px;height:30px;">
+										<li><a style="height:30px;" id="next_page"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+									</ul>
+								</div>
+								<button type="button" id="student_check_download" class="btn btn-sm" style="margin-top:-23px;">
+									down&nbsp;<span class="glyphicon glyphicon-download"></span>
+								</button>
+							</div>
+						</div>
+		</div>
+	</div>
+	<!-- while student login end -->
+
+</body>
+</html>

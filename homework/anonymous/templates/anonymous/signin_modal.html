@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <!--signin modal begin-->
+<div class="modal fade" id="signinModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">登录</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group has-feedback">
+							<label class="control-label col-md-2" for="signin_account">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+							<div class="col-md-9"><!--add has-error Class-->
+								<input type="text" class="form-control" id="signin_account" placeholder="请输入账号">
+								<span id="feedbackAccount" class="glyphicon glyphicon-remove form-control-feedback sr-only" aria-hidden="true"></span><!--remove sr-only Class-->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="signin_psw">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" id="signin_psw" placeholder="请输入密码">
+							</div>
+						</div>
+						<div class="form-group" id="check_psw_div">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span id="check_psw" class="col-md-offset-8 glyphicon glyphicon-remove">账号密码不匹配</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button id="btnLogin" type="button" class="btn btn-success" data-dismiss="modal"><b>现在登录</b></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--signin modal end-->
+
+</body>
+</html>
