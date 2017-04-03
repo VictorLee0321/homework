@@ -442,20 +442,6 @@
 				<div class="modal-body">
 					<div class="form-horizontal">
 						<div class="form-group">
-							<label class="control-label col-md-2" for="province">省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份:</label>
-							<div class="col-md-9">
-								<select class="form-control" id="province">
-										{% for clazzs in clazzs %}
-										<option>{{ clazzs.province}}</option>
-										{% endfor %}
-										<option>province</option>
-										<option>广东省</option>
-										<option>四川省</option>
-										<option>北京</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
 							<label class="control-label col-md-2" for="university">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校:</label>
 							<div class="col-md-9">
 								<select class="form-control" id="university">
@@ -463,9 +449,6 @@
 										<option>仲恺农业工程学院1</option>
 										<option>仲恺农业大学2</option>
 										<option>仲大3</option>
-										{% for clazzs in clazzs %}
-										<option>{{ clazzs.province}}</option>
-										{% endfor %}
 								</select>
 							</div>
 						</div>
@@ -541,7 +524,7 @@
 							<div class="col-md-3">
 								<select class="form-control" id="type">
 									<option>学&nbsp;&nbsp;&nbsp;&nbsp;生</option>
-									<option>老&nbsp;&nbsp;&nbsp;&nbsp;师</option>
+									<option>学&nbsp;&nbsp;&nbsp;&nbsp;委</option>
 								</select>
 							</div>
 							<div class="col-md-offset-3 col-md-3">
@@ -687,6 +670,5 @@
     <!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script> -->
     <script src="{% static "js/bootstrap-datetimepicker.min.js" %}" type="text/javascript"></script>
     <script src="{% static "js/locales/bootstrap-datetimepicker.fr.js" %}" type="text/javascript"></script>
-	<script src="{% static "js/vic.js" type="text/javascript" %}"></script>
 	<!--<script src="{% static "js/my.min.js" type="text/javascript" %}"></script>-->
 </html>
