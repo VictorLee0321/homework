@@ -445,13 +445,10 @@
 							<label class="control-label col-md-2" for="province">省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份:</label>
 							<div class="col-md-9">
 								<select class="form-control" id="province">
-										{% for clazzs in clazzs %}
-										<option>{{ clazzs.province}}</option>
-										{% endfor %}
 										<option>province</option>
-										<option>广东省</option>
-										<option>四川省</option>
-										<option>北京</option>
+										{% for province in provinces %}
+										<option>{{ province.province }}</option>
+										{% endfor %}
 								</select>
 							</div>
 						</div>
@@ -463,9 +460,6 @@
 										<option>仲恺农业工程学院1</option>
 										<option>仲恺农业大学2</option>
 										<option>仲大3</option>
-										{% for clazzs in clazzs %}
-										<option>{{ clazzs.province}}</option>
-										{% endfor %}
 								</select>
 							</div>
 						</div>
