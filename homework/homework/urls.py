@@ -19,5 +19,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 	url(r'^', include('anonymous.urls', namespace='anonymous')),
-    url(r'loadUniversity', include('anonymous.urls', namespace='anonymous'))
+    url(r'loadUniversity', include('anonymous.urls', namespace='anonymous')),
+    url(r'loadDepartment', include('anonymous.urls', namespace='anonymous')),
+    url(r'loadMajor', include('anonymous.urls', namespace='anonymous')),
+    url(r'loadClazz', include('anonymous.urls', namespace='anonymous')),
 ]

@@ -20,4 +20,7 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'loadUniversity', views.loadUniversity),
+    url(r'loadDepartment', views.loadDepartment),
+    url(r'loadMajor', views.loadMajor),
+    url(r'loadClazz', views.loadClazz),
 ]
