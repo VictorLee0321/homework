@@ -52,6 +52,75 @@ $(document).ready(function() {
 		// loadCourse(university, clazz);
 	});
 
+	$("#btnRegister").click(function() {
+		var account = $("#account").val();
+		var studentID = $("#studentID").val();
+		var type = $("#type option:selected").text();
+		var name = $("#name").val();
+		var sex = $("#sex option:selected").text();
+		var psw = $("#psw").val();
+		var psw2 = $("#psw2").val();
+		var email = $("#email").val();
+		var email_code = $("#email_code").val();
+		if ("" == account || "" == studentID || "" == name || "" == psw || "" == psw2 || "" == email || "" == email_code) {
+			$("#check2psw").css('display', 'block');
+			$("#check2psw").html('请完善注册信息');
+			return false;
+		}
+		if (psw != psw2) {
+			$("#check2psw").css('display', 'block');
+			$("#check2psw").html('两次密码不一致');
+			return false;
+		}
+		if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+        	$("#check2psw").css('display', 'block');
+			$("#check2psw").html('邮箱格式错误');
+        	return false;
+  		}
+  		$("#check2psw").css('display', 'none');
+
+		return false;
+		location = "http://victorlee.cn";
+	});
+
+	$("#sendCode").click(function () {
+		// homework_victor@163.com
+		// limingzhao
+		// 13189504947
+		var email = $("#email").val();
+		if(!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+        	$("#check2psw").css('display', 'block');
+			$("#check2psw").html('邮箱格式错误');
+        	return false;
+  		}
+
+  		$.ajax ({
+		url : "/sendEmailCode",
+		type : "POST",
+		dataType : "json",
+		data : {"email":email},
+		success : function(data) {
+			console.log('email: ' + email + ' check code is: ' + data)
+		}
+	});
+
+    });
+
+	$("#signin").click(function() {
+		// $("#check_psw_div").css('display', 'none');
+	});
+
+	$("#btnLogin").click(function() {
+		var signin_account = $("#signin_account").val();
+		var signin_psw = $("#signin_psw").val();
+		if ("" != signin_account && "" != signin_psw) {
+			checkUser(signin_account, signin_psw);
+			return false;
+		} else {
+			return false;
+		}
+	});
+
 });
 
 function loadUniversity(province) {

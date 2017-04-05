@@ -520,67 +520,74 @@
 						<div class="form-group has-feedback">
 							<label class="control-label col-md-2" for="account">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
 							<div class="col-md-9"><!--add has-error Class-->
-								<input type="text" class="form-control" id="account" placeholder="请输入账号">
-								<span id="feedbackAccount" class="glyphicon glyphicon-remove form-control-feedback sr-only" aria-hidden="true"></span><!--remove sr-only Class-->
+								<input type="text" class="form-control" id="account" name="account" placeholder="请输入账号">
+								<span id="feedbackAccount_register" class="glyphicon glyphicon-remove form-control-feedback sr-only" aria-hidden="true"></span><!--remove sr-only Class-->
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-2" for="studentID">学/工&nbsp;&nbsp;&nbsp;号:</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" id="studentID" placeholder="请输入学号">
+								<input type="text" class="form-control" id="studentID" name="studentID" placeholder="请输入学号或工号">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-2" for="type">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:</label>
 							<div class="col-md-3">
-								<select class="form-control" id="type">
+								<select class="form-control" id="type" name="type">
 									<option>学&nbsp;&nbsp;&nbsp;&nbsp;生</option>
 									<option>老&nbsp;&nbsp;&nbsp;&nbsp;师</option>
 								</select>
 							</div>
 							<div class="col-md-offset-3 col-md-3">
-								<span id="checkLearnComm" class="glyphicon glyphicon-remove">此学生不是学生</span>
+								<span id="checkIDAndName" class="glyphicon glyphicon-remove">ID号姓名不匹配</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label  class="control-label col-md-2" for="name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
 							<div class="col-md-9">
-								<input type="text" class="form-control" id="name" placeholder="请输入姓名">
+								<input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-2" for="sex">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</label>
 							<div class="col-md-2">
-								<select class="form-control" id="sex">
+								<select class="form-control" id="sex" name="sex">
 									<option>男</option>
 									<option>女</option>
 								</select>
 							</div>
 							<div class="col-md-offset-4 col-md-3">
-								<span id="checkIDAndName" class="glyphicon glyphicon-menu-down">学号姓名不匹配</span>
-								<!--removeClass("glyphicon-menu-up") addClass("glyphicon-menu-down")-->
-								<!--html("两次密码不一致")-->
+								<span id="check2psw" class="glyphicon glyphicon-remove">两次密码不一致</span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-2" for="psw">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
 							<div class="col-md-9">
-								<input type="password" class="form-control" id="psw" placeholder="请输入密码">
+								<input type="password" class="form-control" id="psw" name="psw" placeholder="请输入密码">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-2" for="psw2">确认密码:</label>
 							<div class="col-md-9">
-								<input type="password" class="form-control" id="psw2" placeholder="请确认密码">
+								<input type="password" class="form-control" id="psw2" name="psw2" placeholder="请确认密码">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="control-label col-md-2" for="email">邮箱认证:</label>
-							<div class="col-md-7">
-								<input type="text" class="form-control" id="email" placeholder="请输入邮箱">
+							<label class="control-label col-md-2" for="email">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱">
 							</div>
-							<div class="col-md-2">
+							<!--<div class="col-md-2">
 								<button id="sendCode" class="btn btn-sm btn-default"><b>验证邮箱</b></button>
+							</div>-->
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="email_code">邮箱认证:</label>
+							<div class="col-md-5">
+								<input type="text" class="form-control" id="email_code" name="email_code" placeholder="请输入以上邮箱收到的验证码">
+							</div>
+							<div class="col-md-4">
+								<button id="sendCode" class="btn btn-sm btn-default"><b>发送邮箱验证码</b></button>
 							</div>
 						</div>
 					</div>

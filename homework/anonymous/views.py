@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from django.core import serializers
 from django.db.models import Q
 import json
+from django.core.mail import send_mail
+import random
 
 from models import Clazz
 
@@ -56,3 +58,9 @@ def loadClazz(request):
 		return HttpResponse(clazzss)
 	return HttpResponse('none')
 
+def sendEmailCode(request):
+	if request.POST.has_key('email'):
+		email = request.POST['email']
+		check_code = random.randint(100000, 999999)
+		send_mail('Register to homework_web', 'check code is: ' + str(check_code), 'homework_victor@163.com', [email], fail_silently=False)
+		return HttpResponse(check_code)

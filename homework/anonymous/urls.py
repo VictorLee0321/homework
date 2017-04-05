@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'loadDepartment', views.loadDepartment),
     url(r'loadMajor', views.loadMajor),
     url(r'loadClazz', views.loadClazz),
+    url(r'sendEmailCode', views.sendEmailCode),
 ]

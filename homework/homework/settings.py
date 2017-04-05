@@ -86,6 +86,15 @@ DATABASES = {
     }
 }
 
+# send email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+#EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'homework_victor@163.com'
+EMAIL_HOST_PASSWORD = 'limingzhao'
+DEFAULT_FROM_EMAIL = 'homework<homework_victor@163.com>'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
