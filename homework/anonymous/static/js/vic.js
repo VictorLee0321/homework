@@ -104,7 +104,7 @@ $(document).ready(function() {
 				console.log('email: ' + email + ' check code is: ' + data)
 			}
 		});
-
+		return false
     });
 
 	$("#signin").click(function() {
