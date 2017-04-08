@@ -62,5 +62,5 @@ def sendEmailCode(request):
 	if request.POST.has_key('email'):
 		email = request.POST['email']
 		check_code = random.randint(100000, 999999)
-		send_mail('Register to homework_web', 'check code is: ' + str(check_code), 'homework_victor@163.com', [email], fail_silently=False)
+		send_mail('Sure 4 Register 2 homework_web', 'check code is: ' + str(check_code), 'homework_victor@163.com', [email], fail_silently=False)
 		return HttpResponse(check_code)

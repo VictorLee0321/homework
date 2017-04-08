@@ -95,14 +95,14 @@ $(document).ready(function() {
   		}
 
   		$.ajax ({
-		url : "/sendEmailCode",
-		type : "POST",
-		dataType : "json",
-		data : {"email":email},
-		success : function(data) {
-			console.log('email: ' + email + ' check code is: ' + data)
-		}
-	});
+			url : "/sendEmailCode",
+			type : "POST",
+			dataType : "json",
+			data : {"email":email},
+			success : function(data) {
+				console.log('email: ' + email + ' check code is: ' + data)
+			}
+		});
 
     });
 
