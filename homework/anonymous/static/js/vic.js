@@ -100,7 +100,7 @@ $(document).ready(function() {
 			dataType : "json",
 			data : {"email":email},
 			success : function(data) {
-				alert('email: ' + email + ' check code is: ' + data)
+				// alert('email: ' + email + ' check code is: ' + data)
 				console.log('email: ' + email + ' check code is: ' + data)
 			}
 		});
