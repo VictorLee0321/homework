@@ -8,6 +8,7 @@ from models import Finish
 from models import Teacher
 from models import Student
 from models import Course
+from models import Emails
 
 # Register your models here.
 class ClazzAdmin(admin.ModelAdmin):
@@ -34,6 +35,8 @@ class StudentAdmin(admin.ModelAdmin):
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('course_id', 'course_name', 'teach_year', 'term', 'teacher_id', 'clazz_id')
 
+class EmailsAdmin(admin.ModelAdmin):
+    list_display = ('email', 'check_code')
 
 
 admin.site.register(Clazz, ClazzAdmin)
@@ -44,3 +47,4 @@ admin.site.register(Finish, FinishAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Course, CourseAdmin)
+admin.site.register(Emails, EmailsAdmin)

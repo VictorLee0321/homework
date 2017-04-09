@@ -101,7 +101,8 @@ $(document).ready(function() {
 			data : {"email":email},
 			success : function(data) {
 				// alert('email: ' + email + ' check code is: ' + data)
-				console.log('email: ' + email + ' check code is: ' + data)
+				console.log('email: ' + email + ' check code is: ' + data);
+				countdown()
 			}
 		});
 		return false
@@ -123,6 +124,23 @@ $(document).ready(function() {
 	});
 
 });
+
+var wait = 10;
+function countdown() {
+	if (0 == wait) {
+		//o.removeAttribute("disabled");
+		$("#sendCode").attr('disabled', false)
+		$("#sendCode").html("发送邮箱验证码");
+		wait = 10;
+	} else {
+		$("#sendCode").attr("disabled", true);
+		$("#sendCode").html("重新发送验证码(" + wait + ")");
+		wait--;
+		setTimeout(function () {
+			countdown();
+        }, 1000)
+	}
+}
 
 function loadUniversity(province) {
     $("#university").empty();

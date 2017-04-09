@@ -7,6 +7,7 @@ from django.db.models import Q
 import json
 from django.core.mail import send_mail
 import random
+from models import *
 
 from models import Clazz
 
@@ -63,5 +64,7 @@ def sendEmailCode(request):
 		email = request.POST['email']
 		check_code = random.randint(100000, 999999)
 		print 'email: ' + email + ' check code is: ' + str(check_code)
-		send_mail('Sure 4 Register 2 homework_web', 'check code is: ' + str(check_code), 'homework_victor@163.com', [email], fail_silently=False)
+		e1 = Emails(email = email, check_code = check_code)
+		e1.save()
+		#send_mail('Sure 4 Register 2 homework_web', 'check code is: ' + str(check_code), 'homework_victor@163.com', [email], fail_silently=False)
 		return HttpResponse(check_code)

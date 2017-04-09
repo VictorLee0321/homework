@@ -83,5 +83,6 @@ class Finish(models.Model):
     is_overtime = models.BooleanField(default=False)
     file_path = models.CharField(max_length=300)
 
-
-
+class Emails(models.Model):
+    email = models.EmailField(primary_key=True)
+    check_code = models.CharField(max_length=6)
