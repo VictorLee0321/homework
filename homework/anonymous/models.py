@@ -14,7 +14,7 @@ class Clazz(models.Model):
     graduation = models.DateField()
 
     def __unicode__(self):
-        return self.clazz_id
+        return u'%s_%s' % (self.clazz_id, self.clazz_name)
 
 class User(models.Model):
     role_choices = ((0, 'admin'), (1, 'teacher'), (2, 'student'), (3, 'guest'))
@@ -26,6 +26,9 @@ class User(models.Model):
     register_time = models.DateTimeField(auto_now_add=True)
     validate_code = models.CharField(max_length=32)
 
+    def __unicode__(self):
+        return self.account
+
 class Student(models.Model):
     sex_choices = ((0, 'female'), (1, 'male'))
     student_id = models.CharField(max_length=20, primary_key=True)
@@ -34,7 +37,7 @@ class Student(models.Model):
     clazz_id = models.ForeignKey(Clazz)
 
     def __unicode__(self):
-        return self.student_id
+        return u'%s_%s' % (self.student_id, self.student_name)
 
 class Teacher(models.Model):
     sex_choices = ((0, 'female'), (1, 'male'))
@@ -43,7 +46,7 @@ class Teacher(models.Model):
     sex = models.IntegerField(choices=sex_choices, default=1)
 
     def __unicode__(self):
-        return self.teacher_id
+        return u'%s_%s' % (self.teacher_id, self.teacher_name)
 
 class Course(models.Model):
     term_choices = ((1, '1'), (2, '2'))
@@ -54,15 +57,15 @@ class Course(models.Model):
     teacher_id = models.ForeignKey(Teacher)
     clazz_id = models.ForeignKey(Clazz)
 
-    #def __str__(self):
-        #return u'%s_%s' % (self.course_id, self.course_name)
-
     def __unicode__(self):
         return u'%s_%s' % (self.course_id, self.course_name)
 
 class Admin(models.Model):
     admin_id = models.AutoField(primary_key=True)
     admin_name = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return u'%s_%s' % (self.admin_id, self.admin_name)
 
 class Task(models.Model):
     task_id = models.AutoField(primary_key=True)
@@ -73,7 +76,6 @@ class Task(models.Model):
     begin_remind = models.IntegerField()
 
     def __unicode__(self):
-        #return str(self.task_id) + ":" + self.task_name
         return u'%s_%s' % (self.task_id, self.task_name)
 
 class Finish(models.Model):
@@ -83,6 +85,12 @@ class Finish(models.Model):
     is_overtime = models.BooleanField(default=False)
     file_path = models.CharField(max_length=300)
 
+    def __unicode__(self):
+        return u'%s_%s' % (self.task_id, self.student_id)
+
 class Emails(models.Model):
     email = models.EmailField(primary_key=True)
     check_code = models.CharField(max_length=6)
+
+    def __unicode__(self):
+        return self.email

@@ -56,8 +56,18 @@ $(document).ready(function() {
 		var account = $("#account").val();
 		var studentID = $("#studentID").val();
 		var type = $("#type option:selected").text();
+		if ('学    生' == type) {
+			type = 2
+		} else {
+			type = 1
+		}
 		var name = $("#name").val();
 		var sex = $("#sex option:selected").text();
+		if ('男' == sex) {
+			sex = 1;
+		} else {
+			sex = 0;
+		}
 		var psw = $("#psw").val();
 		var psw2 = $("#psw2").val();
 		var email = $("#email").val();
@@ -78,6 +88,23 @@ $(document).ready(function() {
         	return false;
   		}
   		$("#check2psw").css('display', 'none');
+
+		$.ajax ({
+			url : "/register",
+			type : "POST",
+			dataType : "json",
+			data : {"email":email, "account":account, "studentID":studentID, "type":type, "name":name, "sex":sex, "psw":psw, "email_code":email_code},
+			success : function(data) {
+				console.log('register return is: ' + data);
+				if (0 == data) {
+					alert('注册成功，请登录');
+				} else if (1 == data) {
+					alert('信息不匹配，请修正');
+				} else if (2 == data) {
+					alert('账号已被注册，请重新输入账号')
+				}
+			}
+		});
 
 		return false;
 		location = "http://victorlee.cn";
@@ -102,6 +129,11 @@ $(document).ready(function() {
 			success : function(data) {
 				// alert('email: ' + email + ' check code is: ' + data)
 				console.log('email: ' + email + ' check code is: ' + data);
+				if (data > 9) {
+					alert('注册验证码已经发送到邮箱: ' + email + ',请注意查收！');
+				} else {
+					alert('此邮箱已注册，请使用新邮箱进行注册！');
+				}
 				countdown()
 			}
 		});
