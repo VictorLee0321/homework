@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'loadMajor', include('anonymous.urls', namespace='anonymous')),
     url(r'loadClazz', include('anonymous.urls', namespace='anonymous')),
     url(r'sendEmailCode', include('anonymous.urls', namespace='anonymous')),
+    url(r'register', include('anonymous.urls', namespace='anonymous')),
 ]
