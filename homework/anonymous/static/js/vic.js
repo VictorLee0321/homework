@@ -2,6 +2,12 @@
  * Created by victorlee on 17-4-3.
  */
 
+$(function() {
+	if ($.cookie("clazz") != "") {
+		$("#location").html($.cookie("clazz"));
+	}
+});
+
 $(document).ready(function() {
 
     $("#province").change(function() {
@@ -42,12 +48,12 @@ $(document).ready(function() {
 		// setting cookie by java script should setting one by one
 		var exdate = new Date();
 		exdate.setDate(exdate.getDate() + 365);
-		document.cookie = "expires=" + exdate.toGMTString();
-		document.cookie = "province=" + escape(province);
-		document.cookie = "university=" + escape(university);
-        document.cookie = "department=" + escape(department);
-		document.cookie = "major=" + escape(major);
-		document.cookie = "clazz=" + escape(clazz);
+		$.cookie("expires", exdate.toGMTString());
+		$.cookie("province", province)
+		$.cookie("university", university);
+		$.cookie("department", department)
+		$.cookie("major", major);
+		$.cookie("clazz", clazz)
 		$("#location").html(clazz);
 		// loadCourse(university, clazz);
 	});
