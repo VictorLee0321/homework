@@ -86,6 +86,13 @@ def register(request):
 		psw = request.POST['psw']
 		ret_code = 1
 		role = 3
+		try:
+			register_code = Emails.objects.get(email = email).check_code
+		except Exception, e:
+			print Exception, ":", e
+			return HttpResponse(4)
+		if (register_code != str(email_code)):
+			return HttpResponse(3)
 		if ('2' == type):
 			try:
 				stu = Student.objects.get(student_id = studentID)

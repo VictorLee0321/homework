@@ -98,16 +98,20 @@ $(document).ready(function() {
 				console.log('register return is: ' + data);
 				if (0 == data) {
 					alert('注册成功，请登录');
+					$('#signupModal').modal('hide');
 				} else if (1 == data) {
 					alert('信息不匹配，请修正');
 				} else if (2 == data) {
 					alert('账号已被注册，请重新输入账号')
+				} else if (3 == data) {
+					alert('邮箱验证码错误，请重试')
+				} else if (4 == data) {
+					alert('邮箱未注册，请进行邮箱注册验证')
 				}
 			}
 		});
-
 		return false;
-		location = "http://victorlee.cn";
+		//location = "http://victorlee.cn";
 	});
 
 	$("#sendCode").click(function () {
