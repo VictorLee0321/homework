@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'loadTask', include('anonymous.urls', namespace='anonymous')),
     url(r'sendEmailCode', include('anonymous.urls', namespace='anonymous')),
     url(r'register', include('anonymous.urls', namespace='anonymous')),
+    url(r'checkAnonStudent', include('anonymous.urls', namespace='anonymous')),
 ]

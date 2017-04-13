@@ -84,6 +84,21 @@ def loadTask(request):
 			return HttpResponse('none')
 	return HttpResponse('none')
 
+def checkAnonStudent(request):
+	if request.POST.has_key('student_id'):
+		student_id = request.POST['student_id']
+		student_name = request.POST['student_name']
+		clazz_id = request.POST['clazz_id']
+		try:
+			stu = Student.objects.all().filter(Q(clazz_id = clazz_id), Q(student_id = student_id), Q(student_name = student_name)).values("student_id")
+		except Exception, e:
+			print Exception, ":", e
+			return HttpResponse(1)
+		if (0 == len(stu)):
+			print stu, 'num is: ', len(stu)
+			return HttpResponse(1)
+		return HttpResponse(0)
+
 def sendEmailCode(request):
 	if request.POST.has_key('email'):
 		email = request.POST['email']
