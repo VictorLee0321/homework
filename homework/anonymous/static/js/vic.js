@@ -3,12 +3,42 @@
  */
 
 $(function() {
-	if ($.cookie("clazz") != "") {
+	if ($.cookie("clazz") != null) {
 		$("#location").html($.cookie("clazz"));
+	} else {
+		$("#locateModal").modal({
+			backdrop: 'static',
+			keyboard: false
+		});
+		//$("#closeLocate").hide();
 	}
 });
 
 $(document).ready(function() {
+
+	$("#btn_upload").click(function() {
+		if (($("#fileName").html() == '上传文件名') || ($("#fileName").html() == '')) {
+			$("#tipsdiv").css('display', 'block');
+			$("#tips").html('请选择上传文件');
+			return false;
+		}
+		if ($("#file").get(0).files[0].size > 10 * 1024 * 1024) {
+			$("#tipsdiv").css('display', 'block');
+			$("#tips").html('请选择小于10M的单个文件');
+			return false;
+		}
+		var name = $("#fileName").text().split(".")[0];
+//		var fileType = $("#fileName").text().split(".")[1];
+//		console.log(fileType);
+		var student_id = name.split("-")[0];
+		var student_name = name.split("-")[1];
+		//checkStudent(student_id, student_name);
+	});
+
+	$("#file").on("change", function() {
+		$("#fileName").html(this.value.split("\\").pop());
+		$("#tipsdiv").css('display', 'none');
+	});
 
     $("#province").change(function() {
 		var province = $("#province option:selected").text();
@@ -46,14 +76,11 @@ $(document).ready(function() {
 			return false;
 		}
 		// setting cookie by java script should setting one by one
-		var exdate = new Date();
-		exdate.setDate(exdate.getDate() + 365);
-		$.cookie("expires", exdate.toGMTString());
 		$.cookie("province", province)
 		$.cookie("university", university);
 		$.cookie("department", department)
 		$.cookie("major", major);
-		$.cookie("clazz", clazz)
+		$.cookie("clazz", clazz, {expires:30})
 		$("#location").html(clazz);
 		// loadCourse(university, clazz);
 	});
