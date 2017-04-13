@@ -8,6 +8,7 @@ import json
 from django.core.mail import send_mail
 import random
 from models import *
+import os
 
 from models import Clazz
 
@@ -98,6 +99,21 @@ def checkAnonStudent(request):
 			print stu, 'num is: ', len(stu)
 			return HttpResponse(1)
 		return HttpResponse(0)
+	return HttpResponse(1)
+
+def uploadFile(request):
+	if request.method == "POST":
+		myFile = request.FILES.get("file", None)
+		if not myFile:
+			print 'no files for upload!'
+			return HttpResponse("no files for upload!")
+		destination = open(os.path.join("/file_homework", myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
+		for chunk in myFile.chunks():  # 分块写入文件
+			destination.write(chunk)
+		destination.close()
+		print 'upload over!'
+		return HttpResponse(0)
+	return HttpResponse("error: no files to post to backend!")
 
 def sendEmailCode(request):
 	if request.POST.has_key('email'):

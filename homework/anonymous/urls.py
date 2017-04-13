@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'sendEmailCode', views.sendEmailCode),
     url(r'register', views.register),
     url(r'checkAnonStudent', views.checkAnonStudent),
+    url(r'uploadFile', views.uploadFile),
 ]

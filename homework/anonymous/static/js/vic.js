@@ -92,14 +92,14 @@ function uploadXlsFile(account, xls_file) {
 	};
 }
 
-function uploadFile(student_id, student_name, clazz, course_name, exp_num, file) {
+function uploadFile(/*student_id, student_name, clazz, course_name, exp_num, file*/) {
 	var fileType = $("#fileName").text().split(".")[1];
 	var fd = new FormData();
-	fd.append("student_id", student_id);
+	/*fd.append("student_id", student_id);
 	fd.append("student_name", student_name);
 	fd.append("clazz", clazz);
 	fd.append("course_name", course_name);
-	fd.append("exp_num", exp_num);
+	fd.append("exp_num", exp_num);*/
 	fd.append("fileType", fileType);
 	fd.append("file", document.getElementById('file').files[0]);
 	createXMLHttpRequest();
@@ -107,7 +107,7 @@ function uploadFile(student_id, student_name, clazz, course_name, exp_num, file)
 	xhr.addEventListener("load", uploadComplete, false);
 	xhr.addEventListener("error", uploadFailed, false);
 	xhr.addEventListener("abort", uploadCanceled, false);
-	xhr.open("POST", "UploadFile");
+	xhr.open("POST", "/uploadFile");
 //	xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 	xhr.send(fd);
 	xhr.onreadystatechange = function() {
@@ -155,12 +155,7 @@ $(document).ready(function() {
 			$("#tips").html('请选择小于10M的单个文件');
 			return false;
 		}
-//		var name = $("#fileName").text().split(".")[0];
-//		var fileType = $("#fileName").text().split(".")[1];
-//		console.log(fileType);
-//		var student_id = name.split("-")[0];
-//		var student_name = name.split("-")[1];
-		//checkStudent(student_id, student_name);
+		uploadFile();
 	});
 
 	$("#file").on("change", function() {
