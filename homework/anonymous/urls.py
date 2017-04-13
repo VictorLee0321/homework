@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'loadDepartment', views.loadDepartment),
     url(r'loadMajor', views.loadMajor),
     url(r'loadClazz', views.loadClazz),
+    url(r'loadCourse', views.loadCourse),
+    url(r'loadTask', views.loadTask),
     url(r'sendEmailCode', views.sendEmailCode),
     url(r'register', views.register),
 ]

@@ -5,6 +5,10 @@
 $(function() {
 	if ($.cookie("clazz") != null) {
 		$("#location").html($.cookie("clazz"));
+		console.log('clazz_id is: ' + $.cookie("clazz").split(":")[0]);
+		console.log('clazz_name is: ' + $.cookie("clazz").split(":")[1]);
+		clazz_id = $.cookie("clazz").split(":")[0];
+		loadCourse(clazz_id)
 	} else {
 		$("#locateModal").modal({
 			backdrop: 'static',
@@ -66,6 +70,14 @@ $(document).ready(function() {
 		loadClazz(province, university, department, major);
 	});
 
+	$("#clazz").change(function () {
+		loadCourse($("#clazz option:selected").text().split(":")[0]);
+    });
+
+	$("#course").change(function () {
+		loadTask($("#course option:selected").text().split(":")[0]);
+    });
+
 	$("#btnLocate").click(function() {
 	    var province = $("#province option:selected").text();
 		var university = $("#university option:selected").text();
@@ -76,11 +88,11 @@ $(document).ready(function() {
 			return false;
 		}
 		// setting cookie by java script should setting one by one
-		$.cookie("province", province)
+		$.cookie("province", province);
 		$.cookie("university", university);
-		$.cookie("department", department)
+		$.cookie("department", department);
 		$.cookie("major", major);
-		$.cookie("clazz", clazz, {expires:30})
+		$.cookie("clazz", clazz, {expires:30});
 		$("#location").html(clazz);
 		// loadCourse(university, clazz);
 	});
@@ -286,8 +298,42 @@ function loadClazz(province, university, department, major) {
 		data : {"province":province, "university":university, "department":department, "major":major},
 		success : function(data) {
 			for (var i = 0; i < data.length; i++) {
-				var clazz = data[i].clazz_name;
+				var clazz = data[i].clazz_id + ":" + data[i].clazz_name;
 				$("#clazz").append("<option value='" + clazz + "'>" + clazz + "</option>");
+			}
+			loadCourse($("#clazz option:selected").text().split(":")[0]);
+		}
+	});
+}
+
+function loadCourse(clazz_id) {
+	$("#course").empty();
+	$.ajax ({
+		url : "/loadCourse",
+		type : "POST",
+		dataType : "json",
+		data : {"clazz_id":clazz_id},
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				var course = data[i].course_id + ":" + data[i].course_name;
+				$("#course").append("<option value='" + course + "'>" + course + "</option>");
+			}
+			loadTask($("#course option:selected").text().split(":")[0]);
+		}
+	});
+}
+
+function loadTask(course_id) {
+	$("#exp").empty();
+	$.ajax ({
+		url : "/loadTask",
+		type : "POST",
+		dataType : "json",
+		data : {"course_id":course_id},
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				var exp = data[i].task_id + ":" + data[i].task_name;
+				$("#exp").append("<option value='" + exp + "'>" + exp + "</option>");
 			}
 		}
 	});

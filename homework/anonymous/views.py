@@ -53,10 +53,35 @@ def loadClazz(request):
 		university = request.POST['university']
 		department = request.POST['department']
 		major = request.POST['major']
-		clazzss = clazzs.filter(Q(province = province), Q(university = university), Q(department = department), Q(major = major)).values("clazz_name").distinct()
+		clazzss = clazzs.filter(Q(province = province), Q(university = university), Q(department = department), Q(major = major)).values("clazz_name", "clazz_id")
 		clazzss = list(clazzss)
 		clazzss = json.dumps(clazzss)
 		return HttpResponse(clazzss)
+	return HttpResponse('none')
+
+def loadCourse(request):
+	if request.POST.has_key('clazz_id'):
+		clazz_id = request.POST['clazz_id']
+		try:
+			courses = Course.objects.all().filter(clazz_id = clazz_id).values("course_id", "course_name")
+			courses = list(courses)
+			courses = json.dumps(courses)
+			return HttpResponse(courses)
+		except Exception, e:
+			print Exception, ":", e
+			return HttpResponse('none')
+	return HttpResponse('none')
+
+def loadTask(request):
+	if request.POST.has_key('course_id'):
+		course_id = request.POST['course_id']
+		try:
+			tasks = Task.objects.all().filter(course_id = course_id).values("task_id", "task_name")
+			tasks = json.dumps(list(tasks))
+			return HttpResponse(tasks)
+		except Exception, e:
+			print Exception, ":", e
+			return HttpResponse('none')
 	return HttpResponse('none')
 
 def sendEmailCode(request):
