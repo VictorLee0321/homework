@@ -25,7 +25,7 @@ SECRET_KEY = '0pk2uf$i#roc+-_3o(ce8wrgw$poium8o_493kryt9+v^k1(oz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['victorlee.cn', 'www.victorlee.cn', 'localhost', '127.0.0.1', 'www.baidu.com']
+ALLOWED_HOSTS = ['victorlee.cn', 'www.victorlee.cn', 'localhost', '127.0.0.1', 'www.baidu.com', '*']
 
 
 # Application definition
