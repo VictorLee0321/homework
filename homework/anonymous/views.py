@@ -124,8 +124,8 @@ def uploadFile(request):
 		#destination = open(os.path.join("/file_homework/", myFile.name), 'w+')  # 打开特定的文件进行二进制的写操作
 		#for chunk in myFile.chunks():  # 分块写入文件
 			#destination.write(chunk)
-		print 'myFile name is: ', myFile.name
-		destination = codecs.open(os.path.join("/file_homework/", myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
+		print 'myFile name is: ', str(myFile.name)
+		destination = codecs.open(os.path.join("/file_homework/", str(myFile.name)), 'wb+')  # 打开特定的文件进行二进制的写操作
 		for chunk in myFile.chunks():  # 分块写入文件
 			destination.write(chunk)
 		destination.close()
