@@ -12,9 +12,10 @@ from models import *
 import os
 import time
 import sys
+import codecs
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 from models import Clazz
 
@@ -116,7 +117,11 @@ def uploadFile(request):
 		if not myFile:
 			print 'no files for upload!'
 			return HttpResponse("no files for upload!")
-		destination = open(os.path.join("/file_homework/", myFile.name), 'w+')  # 打开特定的文件进行二进制的写操作
+		#destination = open(os.path.join("/file_homework/", myFile.name), 'w+')  # 打开特定的文件进行二进制的写操作
+		#for chunk in myFile.chunks():  # 分块写入文件
+			#destination.write(chunk)
+		print myFile.name
+		destination = codecs.open(os.path.join("/file_homework/", myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
 		for chunk in myFile.chunks():  # 分块写入文件
 			destination.write(chunk)
 		destination.close()
