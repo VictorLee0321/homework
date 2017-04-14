@@ -1,6 +1,7 @@
 #-*-coding:utf-8-*-
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.utils import timezone
 
 from django.core import serializers
 from django.db.models import Q
@@ -9,6 +10,7 @@ from django.core.mail import send_mail
 import random
 from models import *
 import os
+import time
 
 from models import Clazz
 
@@ -114,6 +116,19 @@ def uploadFile(request):
 		for chunk in myFile.chunks():  # 分块写入文件
 			destination.write(chunk)
 		destination.close()
+		student = Student.objects.get(student_id=student_id)
+		task = Task.objects.get(task_id=task_id)
+		last_time = task.last_time
+		print 'last_time is: ', last_time
+		now_time = time.time()
+		print 'now_time is: ', now_time
+		print timezone.localtime(timezone.now())
+		finish = Finish(task_id=task, student_id=student)
+		try:
+			Finish.objects.filter(Q(task_id=task_id), Q(student_id=student_id)).delete()
+		except Exception, e:
+			print Exception, ":", e
+		finish.save()
 		print 'upload over!'
 		return HttpResponse(0)
 	return HttpResponse("error: no files to post to backend!")
