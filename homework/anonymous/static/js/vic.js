@@ -244,6 +244,7 @@ $(document).ready(function() {
 		$("#fileName").html('上传文件名');
 		$("#tipsdiv").css('display', 'none');
 		$("#btn_upload").attr('disabled', false);
+		$("#file").val("");
     });
 
 	$("#btnLocate").click(function() {

@@ -11,6 +11,10 @@ import random
 from models import *
 import os
 import time
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 from models import Clazz
 
@@ -120,16 +124,24 @@ def uploadFile(request):
 		task = Task.objects.get(task_id=task_id)
 		last_time = task.last_time
 		print 'last_time is: ', last_time
+		last_time = time.mktime(time.strptime(str(last_time), "%Y-%m-%d %H:%M:%S"))
+		print 'last_time seconds is: ', last_time
 		now_time = time.time()
 		print 'now_time is: ', now_time
-		finish = Finish(task_id=task, student_id=student)
+		is_overtime = False
+		ret_code = 0
+		if (last_time < now_time):
+			is_overtime = True
+			ret_code = 1
+		print 'is_overtime is: ', is_overtime
+		finish = Finish(task_id=task, student_id=student, is_overtime = is_overtime)
 		try:
 			Finish.objects.filter(Q(task_id=task_id), Q(student_id=student_id)).delete()
 		except Exception, e:
 			print Exception, ":", e
 		finish.save()
 		print 'upload over!'
-		return HttpResponse(0)
+		return HttpResponse(ret_code)
 	return HttpResponse("error: no files to post to backend!")
 
 def sendEmailCode(request):
