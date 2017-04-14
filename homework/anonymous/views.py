@@ -14,7 +14,7 @@ import time
 import sys
 import codecs
 
-#reload(sys)
+reload(sys)
 #sys.setdefaultencoding('utf-8')
 
 from models import Clazz
@@ -109,6 +109,7 @@ def checkAnonStudent(request):
 	return HttpResponse(1)
 
 def uploadFile(request):
+	print 'sys default encoding is: ', sys.getdefaultencoding()
 	if request.method == "POST":
 		student_id = request.POST['student_id']
 		task_id = request.POST['task_id']
