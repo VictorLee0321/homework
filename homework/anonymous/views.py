@@ -93,6 +93,8 @@ def loadTask(request):
 	return HttpResponse('none')
 
 def checkAnonStudent(request):
+	print 'sys default encoding is: ', sys.getdefaultencoding()
+
 	if request.POST.has_key('student_id'):
 		student_id = request.POST['student_id']
 		student_name = request.POST['student_name']
@@ -110,6 +112,7 @@ def checkAnonStudent(request):
 
 def uploadFile(request):
 	print 'sys default encoding is: ', sys.getdefaultencoding()
+
 	if request.method == "POST":
 		student_id = request.POST['student_id']
 		task_id = request.POST['task_id']
@@ -121,11 +124,13 @@ def uploadFile(request):
 		#destination = open(os.path.join("/file_homework/", myFile.name), 'w+')  # 打开特定的文件进行二进制的写操作
 		#for chunk in myFile.chunks():  # 分块写入文件
 			#destination.write(chunk)
-		print myFile.name
+		print 'myFile name is: ', myFile.name
 		destination = codecs.open(os.path.join("/file_homework/", myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
 		for chunk in myFile.chunks():  # 分块写入文件
 			destination.write(chunk)
 		destination.close()
+		print 'write finish by codecs---------------------'
+
 		student = Student.objects.get(student_id=student_id)
 		task = Task.objects.get(task_id=task_id)
 		last_time = task.last_time
