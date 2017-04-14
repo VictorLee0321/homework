@@ -122,7 +122,6 @@ def uploadFile(request):
 		print 'last_time is: ', last_time
 		now_time = time.time()
 		print 'now_time is: ', now_time
-		print timezone.localtime(timezone.now())
 		finish = Finish(task_id=task, student_id=student)
 		try:
 			Finish.objects.filter(Q(task_id=task_id), Q(student_id=student_id)).delete()
