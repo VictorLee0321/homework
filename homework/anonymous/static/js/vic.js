@@ -93,10 +93,13 @@ function uploadXlsFile(account, xls_file) {
 }
 
 function uploadFile(/*student_id, student_name, clazz, course_name, exp_num, file*/) {
+	var student_id = $("#fileName").text().split(".")[0].split("-")[0];
 	var fileType = $("#fileName").text().split(".")[1];
+	var task_id = $("#exp option:selected").text().split(":")[0];
 	var fd = new FormData();
-	/*fd.append("student_id", student_id);
-	fd.append("student_name", student_name);
+	fd.append("student_id", student_id);
+	fd.append("task_id", task_id);
+	/*fd.append("student_name", student_name);
 	fd.append("clazz", clazz);
 	fd.append("course_name", course_name);
 	fd.append("exp_num", exp_num);*/
@@ -161,6 +164,13 @@ $(document).ready(function() {
 	$("#file").on("change", function() {
 		file_name = this.value.split("\\").pop();
 		$("#fileName").html(this.value.split("\\").pop());
+		var task_id = $("#exp option:selected").text().split(":")[0];
+		if (0 == task_id.length) {
+			$("#tipsdiv").css('display', 'block');
+			$("#tips").html('请选择正确作业');
+			$("#btn_upload").attr('disabled', true);
+			return false;
+		}
 		regex = /^\d+\-[\u4E00-\u9FA5]{1,5}\-/;
 		if (regex.test(file_name)) {
 			$("#tipsdiv").css('display', 'none');
@@ -228,6 +238,12 @@ $(document).ready(function() {
 
 	$("#course").change(function () {
 		loadTask($("#course option:selected").text().split(":")[0]);
+    });
+
+	$("#exp").change(function () {
+		$("#fileName").html('上传文件名');
+		$("#tipsdiv").css('display', 'none');
+		$("#btn_upload").attr('disabled', false);
     });
 
 	$("#btnLocate").click(function() {
@@ -489,4 +505,7 @@ function loadTask(course_id) {
 			}
 		}
 	});
+	$("#fileName").html('上传文件名');
+	$("#tipsdiv").css('display', 'none');
+	$("#btn_upload").attr('disabled', false);
 }

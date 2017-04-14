@@ -103,11 +103,14 @@ def checkAnonStudent(request):
 
 def uploadFile(request):
 	if request.method == "POST":
+		student_id = request.POST['student_id']
+		task_id = request.POST['task_id']
+		print 's_id,tid is: ', student_id, task_id
 		myFile = request.FILES.get("file", None)
 		if not myFile:
 			print 'no files for upload!'
 			return HttpResponse("no files for upload!")
-		destination = open(os.path.join("/file_homework", myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
+		destination = open(os.path.join("/file_homework/", myFile.name), 'wb+')  # 打开特定的文件进行二进制的写操作
 		for chunk in myFile.chunks():  # 分块写入文件
 			destination.write(chunk)
 		destination.close()
