@@ -15,7 +15,7 @@ import sys
 import codecs
 
 reload(sys)
-#sys.setdefaultencoding('utf-8')
+sys.setdefaultencoding('utf-8')
 
 from models import Clazz
 
