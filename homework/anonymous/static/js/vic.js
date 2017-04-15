@@ -375,6 +375,10 @@ $(document).ready(function() {
 
 });
 
+function checkUser(account, psw) {
+
+}
+
 var wait = 10;
 function countdown() {
 	if (0 == wait) {
