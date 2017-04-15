@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>homework</title>
+	{% load static %}
+	<!-- <link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<link href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet"> -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+	<!--[if lt IE 9]>
+		<script src="http://apps.bdimg.com/libs/html5shiv/r29/html5.min.js"></script>
+		<script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="{% static 'css/yzbootstrap.css' %}">
+	<link rel="stylesheet" href="{% static 'css/mybootstrap.css' %}">
+	<link rel="shortcut icon" href="{% static 'img/hw.jpg' %}">
+</head>
+<body>
+
+	<div class="navbar navbar-inverse navbar-static-top">
+		<div class="navbar-header">
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="http://victorlee.cn" class="navbar-brand"><b>Homework</b></a>
+		</div>
+		<div class="collapse navbar-collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="http://victorlee.cn"><b>QuestionAndAnswer</b></a></li>
+				<li><a href="http://victorlee.cn"><b>Tips</b></a></li>
+			</ul>
+			<div class="pull-right">
+				<a class="btn btn-sm btn-success" id="locate" data-toggle="modal" href="#locateModal" data-keyboard="true"><i class="glyphicon glyphicon-map-marker"></i>&nbsp;&nbsp;<b id="location">Locate</b></a>
+				<a class="btn btn-sm btn-warning" id="signup" data-toggle="modal" href="#signupModal" data-keyboard="true">Sign Up Free</a>
+				<a class="btn btn-sm btn-primary" id="signin" data-toggle="modal" href="#signinModal" data-keyboard="true"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Sign In</a>
+				<a class="btn btn-sm btn-danger" id="logout"><i class="glyphicon glyphicon-log-out"></i>&nbsp;&nbsp;Log Out</a>
+				<a class="btn btn-sm btn-info" id="user" data-toggle="modal" href="#userModal" data-keyboard="true"><i class="glyphicon glyphicon-user"></i>&nbsp;&nbsp;<b id="user_account">User</b></a>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4" style="margin-top: 4%; padding-right: 0px; margin-right: 0px">
+		<div class="list-group col-md-8 col-md-offset-2">
+			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-danger" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">即将到期作业1<span class="badge">2017-03-21</span></a>
+		</div>
+	</div>
+
+	<!-- anonymous upload file begin -->
+	<section id="main" class="col-md-4">
+		<div class="container col-md-12">
+			<div class="row col-md-12">
+				<!--<div class="col-md-12">-->
+					<!--面板-->
+					<form action="#" method="post" enctype="multipart/form-data;charset=utf-8" id="myform">
+						<!-- upload -->
+						<div class="panel panel-default">
+							<!-- panel-heading begin -->
+							<div class="panel-heading">
+								<div class="row">
+									<!--下拉菜单-->
+									<div class="col-md-4" id="course-div">
+										<select class="form-control" id="course">
+											<option>course</option>
+											<option>null1</option>
+											<option>null2</option>
+											<option>null3</option>
+										</select>
+									</div>
+									<div class="col-md-4" id="exp-div">
+										<select class="form-control" id="exp">
+											<option>task</option>
+											<option>null1</option>
+											<option>null2</option>
+											<option>null3</option>
+										</select>
+									</div>
+									<!--下拉菜单-->
+									<div class="col-md-4">
+										<!--上传图标-->
+										<span id="upload" class="glyphicon glyphicon-open"></span>
+										<!--上传图标-->
+										<!--文件上传实现-->
+										<input type="file" name="file" id="file">
+										<!--文件上传实现-->
+									</div>
+								</div>
+								<!-- panel-heading-row end -->
+							</div>
+							<!-- panel-heading end -->
+							<div class="panel-body">
+								<!--Panel content-->
+								<p id="fileName">上传文件名</p>
+								<p id="exampleName">
+									命名格式:&nbsp;学号-姓名-其它......<!-- <span id="scale"></span> -->
+								</p>
+								<!--Panel content-->
+							</div>
+							<div id="tipsdiv" align="center" style="display: none;">
+								<p>
+									<span id="tips" style="color: red;"></span>
+								</p>
+							</div>
+							<div id="progressMain" class="progress progress-striped active" style="display: none;">
+								<div id="progressBar" class="progress-bar progress-bar-success"
+									role="progressbar" aria-valuenow="0" aria-valuemin="0"
+									aria-valuemax="100" style="width: 0%;"></div>
+							</div>
+							<div class="panel-footer">
+								<button type="button" id="btn_upload">
+									upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+								</button>
+							</div>
+						</div>
+						<!--面板-->
+					</form>
+				<!--</div>-->
+				<!--<div class="col-md-4"></div>-->
+			</div>
+		</div>
+		<!-- container end -->
+	</section>
+	<!-- anonymous upload file end -->
+
+	<div class="col-md-4" style="margin-top: 4%; margin-left: 0px; padding-left: 0px">
+		<div class="list-group col-md-8 col-md-offset-2">
+			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-success" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+			<a class="list-group-item list-group-item-warning" href="#">近期发布作业1<span class="badge">2017-03-21</span></a>
+		</div>
+	</div>
+
+	<footer class="modal-footer" style="padding:2px">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4"></div>
+				<div class="col-md-4" id="foot">
+					<a href="http://www.miibeian.gov.cn/" target="_blank">粤ICP备16022829号-2</a>
+				</div>
+				<div class="col-md-4"></div>
+			</div>
+		</div>
+	</footer>
+
+<!-- while cicos login begin -->
+<div id="afterCicosLogin">
+	<div class="col-md-2 col-md-offset-1">
+		<ol class="nav nav-pills nav-stacked">
+			<li class="btn btn-info"><a style="color:black;font-weight:bold;" id="btn_check_homework">查询作业</a></li>
+			<li class="btn btn-warning"><a style="color:black;font-weight:bold;" id="btn_issue_homework">发布作业</a></li>
+			<li class="btn btn-success"><a style="color:black;font-weight:bold;" id="btn_add_student">录入学生</a></li>
+			<li class="btn btn-danger"><a style="color:black;font-weight:bold;" id="btn_add_cicos">添加学委</a></li>
+		</ol>
+	</div>
+	<div class="col-md-8" id="div_check_homework">
+			<div class="col-md-offset-1">
+				<!--面板-->
+					<div class="panel panel-default">
+						<!-- panel-heading begin -->
+						<div class="panel-heading">
+							<div class="row">
+								<!--下拉菜单-->
+								<div class="col-md-4" id="check_course_div">
+									<select class="form-control" id="check_course">
+										<option>专业课程</option>
+										<option>JAVA应用技术</option>
+										<option>计算机图形学</option>
+										<option>管理信息系统</option>
+									</select>
+								</div>
+								<div class="col-md-3" id="check_exp_div">
+									<select class="form-control" id="check_exp">
+										<option>作业号</option>
+										<option>实验一</option>
+										<option>实验二</option>
+										<option>实验三</option>
+									</select>
+								</div>
+								<div class="col-md-3" id="check_status_div">
+									<select class="form-control" id="check_status">
+										<!-- <option value="title">作业情况</option> -->
+										<option value="0">已交</option>
+										<option value="1">未交</option>
+										<option value="2">补交</option>
+									</select>
+								</div>
+								<div class="col-md-1 col-md-offset-1" id="check_click_div">
+									<button type="button" id="btn_check_click" class="btn btn-sm btn-info" style="line-height:22px;">
+										<span class="glyphicon glyphicon-search"></span>
+									</button>
+								</div>
+								<!--下拉菜单-->
+							</div>
+							<!-- panel-heading-row end -->
+						</div>
+						<!-- panel-heading end -->
+						<div class="panel-body" style="padding-bottom:0px">
+							<!--Panel content-->
+							<table class="table table-bordered table-hover">
+								<thead id="cicos_check_thead">
+									<tr>
+										<th></th>
+										<th>文件名</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody id="cicos_check_tbody">
+									<tr>
+										<td><input type="checkbox"></td>
+										<td>201321314315-李明钊-信计133班-JAVA应用技术-作业2.doc</td>
+										<td>
+											<button type="button" id="btn_down" class="btn btn-xs">
+												<span class="glyphicon glyphicon-download"></span>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<!--Panel content-->
+						</div>
+						<div class="panel-footer">
+							<div class="col-md-4"></div>
+							<div style="display:inline-block;height:30px;">
+								<ul class="pagination" style="margin:0px;height:30px;">
+									<li><a style="height:30px;" id="cicos_previous_page"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+								</ul>
+								<ul class="pagination" style="margin:0px;height:30px;">
+									<li><span style="height:30px;" id="cicos_page_num"><b>1</b></span></li>
+								</ul>
+								<ul class="pagination" style="margin:0px;height:30px;">
+									<li><a style="height:30px;" id="cicos_next_page"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+								</ul>
+							</div>
+							<button type="button" id="cicos_check_download" class="btn btn-sm btn-warning" style="margin-top:-23px;">
+								download&nbsp;all&nbsp;<span class="glyphicon glyphicon-download"></span>
+							</button>
+							<button type="button" id="cicos_send_all_email" class="btn btn-sm btn-warning" style="margin-top:-23px;">
+								send&nbsp;all&nbsp;email&nbsp;<span class="glyphicon glyphicon-envelope"></span>
+							</button>
+						</div>
+					</div>
+				<!--面板-->
+			</div>
+	</div>
+	<div class="col-md-8" id="div_issue_homework">
+			<div class="col-md-offset-1">
+					<div class="modal-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-md-2" for="issue_course_name">课&nbsp;&nbsp;&nbsp;程&nbsp;&nbsp;&nbsp;名:</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="issue_course_name" placeholder="请输入课程名">
+								</div>
+							</div>
+							<div class="form-group">
+								<label  class="control-label col-md-2" for="issue_exp_num">作&nbsp;&nbsp;&nbsp;业&nbsp;&nbsp;&nbsp;号:</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="issue_exp_num" placeholder="请输入作业号(请用阿拉伯数字表示)">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-2" for="issue_last_time">截&nbsp;&nbsp;&nbsp;止&nbsp;&nbsp;&nbsp;日:</label>
+								<div class="col-md-9 input-append date" id="datetimepicker" data-date="10-01-2016" data-date-format="yyyy-mm-dd hh:ii:ss">
+									<input type="text" class="span2 form-control" id="issue_last_time" value="2016-10-01 21:30:00">
+									<span class="add-on"><i class="icon-remove"></i></span>
+									<span class="add-on"><i class="icon-th"></i></span>
+								</div>
+							</div>
+							<div class="form-group">
+								<div id="sure_add_tips_div" align="center" style="display: none;">
+									<p>
+										<span id="sure_add_tips" style="color: red;">添加失败，请重试</span>
+									</p>
+								</div>
+								<div class="col-md-offset-2 col-md-7"></div>
+								<div>
+									<button type="button" id="sure_issue_course" class="btn btn-sm btn-success">
+										保存课程&nbsp;<span class="glyphicon glyphicon-ok-sign"></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<div class="col-md-1"></div>
+	</div>
+	<div class="col-md-8" id="div_add_student">
+			<div class="col-md-offset-1">
+				<div class="panel panel-default">
+						<!-- panel-heading begin -->
+						<div class="panel-heading">
+							<p>excel表导入格式前四行如下:</p>
+						</div>
+						<!-- panel-heading end -->
+						<div class="panel-body" style="padding-bottom:0px">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th>学号</th>
+										<th>姓名</th>
+									</tr>
+								</thead>
+								<tbody id="tbody_add_student">
+									<tr>
+										<td>123456789012</td>
+										<td>某某某</td>
+									</tr>
+									<tr>
+										<td>987654321098</td>
+										<td>某某</td>
+									</tr>
+									<tr>
+										<td>123456789012</td>
+										<td>某某某</td>
+									</tr>
+									<tr>
+										<td colspan="2" style="color:red;">注意：目前还不支持2007版的excel，只支持2003的版本</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="panel-footer" style="height:50px;">
+							<div class="col-md-8">
+									<input type="file" name="xls_file" id="xls_file" style="width:250px;">
+							</div>
+							<div class="col-md-2" id="div_xls_tips">
+								<span id="xls_tips"></span>
+							</div>
+							<div class="col-md-2">
+								<button type="button" id="xls_upload" class="btn btn-xs">
+									upload&nbsp;<span class="glyphicon glyphicon-upload"></span>
+								</button>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div class="col-md-2"></div>
+	</div>
+</div>
+<!-- while cicos login end -->
+<!-- while student login begin -->
+<div id="afterStudentLogin">
+	<div class="col-md-2 col-md-offset-1">
+		<ol class="nav nav-pills nav-stacked">
+			<li class="btn btn-warning"><a style="color:black;font-weight:bold;" id="btn_unsubmit_homework">未交作业</a></li>
+			<li class="btn btn-info"><a style="color:black;font-weight:bold;" id="btn_class_homework">班级作业</a></li>
+			<li class="btn btn-danger"><a style="color:black;font-weight:bold;" id="btn_overtime_homework">超期作业</a></li>
+			<li class="btn btn-success"><a style="color:black;font-weight:bold;" id="btn_submited_homework">已交作业</a></li>
+		</ol>
+	</div>
+	<div class="col-md-8">
+		<div class="panel panel-info">
+						<!-- panel-heading begin -->
+						<div class="panel-heading">
+							<h4 id="student_panel_heading">点击查询</h4>
+						</div>
+						<!-- panel-heading end -->
+						<div class="panel-body" style="padding-bottom:0px">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th></th>
+										<th>课程名</th>
+										<th>作业号</th>
+										<th>截止时间&nbsp;
+											<button type="button" id="btn_overtime" class="btn btn-xs">
+												<span class="glyphicon glyphicon-refresh"></span>
+											</button>
+										</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody id="tbody">
+									<!-- <tr>
+										<td><input type="checkbox"></td>
+										<td>JAVA应用技术</td>
+										<td>三</td>
+										<td>2016-08-01 00:00:00</td>
+										<td>
+											<button type="button" id="btn_upload" class="btn btn-xs">
+												<span class="glyphicon glyphicon-upload"></span>
+											</button>
+										</td>
+									</tr> -->
+								</tbody>
+							</table>
+						</div>
+						<div class="panel-footer">
+							<div class="col-md-4"></div>
+							<button type="button" id="student_all_check" class="btn btn-sm" style="margin-top:-23px;">
+								all&nbsp;<span class="glyphicon glyphicon-check"></span>
+							</button>
+							<div style="display:inline-block;height:30px;">
+								<ul class="pagination" style="margin:0px;height:30px;">
+									<li><a style="height:30px;" id="previous_page"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+								</ul>
+								<ul class="pagination" style="margin:0px;height:30px;">
+									<li><span style="height:30px;" id="page_num"><b>1</b></span></li>
+								</ul>
+								<ul class="pagination" style="margin:0px;height:30px;">
+									<li><a style="height:30px;" id="next_page"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+								</ul>
+							</div>
+							<button type="button" id="student_check_download" class="btn btn-sm" style="margin-top:-23px;">
+								down&nbsp;<span class="glyphicon glyphicon-download"></span>
+							</button>
+						</div>
+					</div>
+	</div>
+</div>
+<!-- while student login end -->
+<!--locate modal begin-->
+<div class="modal fade" id="locateModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button id="closeLocate" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">请选择具体班级</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-md-2" for="province">省&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;份:</label>
+							<div class="col-md-9">
+								<select class="form-control" id="province">
+										<option>province</option>
+										{% for province in provinces %}
+										<option>{{ province.province }}</option>
+										{% endfor %}
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="university">学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校:</label>
+							<div class="col-md-9">
+								<select class="form-control" id="university">
+										<option>university</option>
+										<!--<option>仲恺农业工程学院1</option>
+										<option>仲恺农业大学2</option>
+										<option>仲大3</option>-->
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="department">院&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系:</label>
+							<div class="col-md-9">
+								<select class="form-control" id="department">
+										<option>department</option>
+										<!--<option>计算科学学院1</option>
+										<option>仲恺农业大学2</option>
+										<option>jike3</option>-->
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="major">专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业:</label>
+							<div class="col-md-9">
+								<select class="form-control" id="major">
+										<option>major</option>
+										<!--<option>信息与计算科学</option>
+										<option>统计学</option>
+										<option>王牌专业</option>-->
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="clazz">班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级:</label>
+							<div class="col-md-9">
+								<select class="form-control" id="clazz">
+										<option>class</option>
+										<!--<option>信计133班1</option>
+										<option>仲恺农业大学2</option>
+										<option>仲大3</option>-->
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button id="btnLocate" type="button" class="btn btn-success" data-dismiss="modal"><b>确认班级</b></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--locate modal end-->
+<!--signup modal begin-->
+<div class="modal fade" id="signupModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">注册</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group has-feedback">
+							<label class="control-label col-md-2" for="account">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+							<div class="col-md-9"><!--add has-error Class-->
+								<input type="text" class="form-control" id="account" name="account" placeholder="请输入账号">
+								<span id="feedbackAccount_register" class="glyphicon glyphicon-remove form-control-feedback sr-only" aria-hidden="true"></span><!--remove sr-only Class-->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="studentID">学/工&nbsp;&nbsp;&nbsp;号:</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="studentID" name="studentID" placeholder="请输入学号或工号">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="type">类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型:</label>
+							<div class="col-md-3">
+								<select class="form-control" id="type" name="type">
+									<option>学&nbsp;&nbsp;&nbsp;&nbsp;生</option>
+									<option>老&nbsp;&nbsp;&nbsp;&nbsp;师</option>
+								</select>
+							</div>
+							<div class="col-md-offset-3 col-md-3">
+								<span id="checkIDAndName" class="glyphicon glyphicon-remove">ID号姓名不匹配</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label  class="control-label col-md-2" for="name">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="sex">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</label>
+							<div class="col-md-2">
+								<select class="form-control" id="sex" name="sex">
+									<option>男</option>
+									<option>女</option>
+								</select>
+							</div>
+							<div class="col-md-offset-4 col-md-3">
+								<span id="check2psw" class="glyphicon glyphicon-remove">两次密码不一致</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="psw">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" id="psw" name="psw" placeholder="请输入密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="psw2">确认密码:</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" id="psw2" name="psw2" placeholder="请确认密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="email">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱">
+							</div>
+							<!--<div class="col-md-2">
+								<button id="sendCode" class="btn btn-sm btn-default"><b>验证邮箱</b></button>
+							</div>-->
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="email_code">邮箱认证:</label>
+							<div class="col-md-5">
+								<input type="text" class="form-control" id="email_code" name="email_code" placeholder="请输入以上邮箱收到的验证码">
+							</div>
+							<div class="col-md-4">
+								<button id="sendCode" class="btn btn-sm btn-default"><b>发送邮箱验证码</b></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button id="btnRegister" type="button" class="btn btn-success" data-dismiss="modal"><b>立即注册</b></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--signup modal end-->
+<!--signin modal begin-->
+<div class="modal fade" id="signinModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">登录</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group has-feedback">
+							<label class="control-label col-md-2" for="signin_account">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号:</label>
+							<div class="col-md-9"><!--add has-error Class-->
+								<input type="text" class="form-control" id="signin_account" placeholder="请输入账号">
+								<span id="feedbackAccount" class="glyphicon glyphicon-remove form-control-feedback sr-only" aria-hidden="true"></span><!--remove sr-only Class-->
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-2" for="signin_psw">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label>
+							<div class="col-md-9">
+								<input type="password" class="form-control" id="signin_psw" placeholder="请输入密码">
+							</div>
+						</div>
+						<div class="form-group" id="check_psw_div">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span id="check_psw" class="col-md-offset-8 glyphicon glyphicon-remove">账号密码不匹配</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button id="btnLogin" type="button" class="btn btn-success" data-dismiss="modal"><b>现在登录</b></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--signin modal end-->
+<!--user modal begin-->
+<div class="modal fade" id="userModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">修改密码</h4>
+			</div>
+			<form>
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-md-3" for="old_psw">旧&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码:</label>
+							<div class="col-md-8">
+								<input type="password" class="form-control" id="old_psw" placeholder="请输入旧密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3" for="new_psw">新&nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;&nbsp;码:</label>
+							<div class="col-md-8">
+								<input type="password" class="form-control" id="new_psw" placeholder="请输入新密码">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3" for="new_psw2">确认新密码:</label>
+							<div class="col-md-8">
+								<input type="password" class="form-control" id="new_psw2" placeholder="请确认新密码">
+							</div>
+						</div>
+						<div class="form-group" id="change_psw_div">
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span id="change_psw" class="col-md-offset-8 glyphicon glyphicon-remove">旧密码输入错误</span>
+						</div>
+					</div>
+				</div>
+			</form>
+			<div class="modal-footer">
+				<button id="btnChangePsw" type="button" class="btn btn-success" data-dismiss="modal"><b>确认修改</b></button>
+			</div>
+		</div>
+	</div>
+</div>
+<!--user modal end-->
+</body>
+	<script src="{% static 'js/jquery-2.1.4.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script> -->
+    <!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js" type="text/javascript"></script> -->
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/locales/bootstrap-datetimepicker.fr.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/vic.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/jquery.cookie.js' %}" type="text/javascript" ></script>
+	<!--<script src="{% static "js/my.min.js" type="text/javascript" %}"></script>-->
+</html>

@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'register', views.register),
     url(r'checkAnonStudent', views.checkAnonStudent),
     url(r'uploadFile', views.uploadFile),
+    #url(r'logout', views.logout),
 ]

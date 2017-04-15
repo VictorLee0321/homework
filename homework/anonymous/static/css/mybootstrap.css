@@ -30,7 +30,8 @@
 
 #afterStudentLogin {
 	margin-top: 6%;
-	display: none;
+	/*display: none;*/
+	display: block;
 }
 
 #afterCicosLogin {

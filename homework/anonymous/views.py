@@ -171,7 +171,7 @@ def sendEmailCode(request):
 			print Exception, ":", e
 			check_code = 1
 			return HttpResponse(check_code)
-		#send_mail('Sure 4 Register 2 homework_web', 'check code is: ' + str(check_code), 'homework_victor@163.com', [email], fail_silently=False)
+		send_mail('Sure 4 Register 2 homework_web', 'check code is: ' + str(check_code), 'homework_victor@163.com', [email], fail_silently=False)
 		return HttpResponse(check_code)
 
 def register(request):

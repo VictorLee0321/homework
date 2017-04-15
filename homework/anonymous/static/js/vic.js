@@ -3,6 +3,11 @@
  */
 
 $(function() {
+	if ($.cookie("type") != null) {
+		if ($.cookie("type") == "student") {
+			location.href = 'student/index';
+		}
+	}
 	if ($.cookie("clazz") != null) {
 		$("#location").html($.cookie("clazz"));
 		console.log('clazz_id is: ' + $.cookie("clazz").split(":")[0]);
@@ -359,7 +364,7 @@ $(document).ready(function() {
     });
 
 	$("#signin").click(function() {
-		// $("#check_psw_div").css('display', 'none');
+		$("#check_psw_div").css('display', 'none');
 	});
 
 	$("#btnLogin").click(function() {
@@ -369,6 +374,8 @@ $(document).ready(function() {
 			checkUser(signin_account, signin_psw);
 			return false;
 		} else {
+			$("#check_psw_div").css('display', 'block');
+			$("#check_psw").html("请输入正确账号密码");
 			return false;
 		}
 	});
@@ -376,7 +383,38 @@ $(document).ready(function() {
 });
 
 function checkUser(account, psw) {
+	$.ajax ({
+		url : "/student/checkUser",
+		async: true,
+		type : "POST",
+		dataType : "json",
+		data : {"account":account,"password":psw},
+		success : function(data) {
+			if (0 == data) {
+				// admin
 
+			} else if (1 == data) {
+				// teacher
+
+			} else if (3 == data) {
+				// guest
+
+			} else if (2 == data) {
+				// student
+				$.cookie("type", "student", {expires:30, path:"/"});
+				$.cookie("account", account, {expires:30, path:"/"});
+				$.cookie("password", psw, {expires:30, path:"/"});
+				location.href = 'student/index';
+
+			} else if (4 == data) {
+				$("#check_psw_div").css('display', 'block');
+				$("#check_psw").html("此账号尚未注册");
+			} else {
+				$("#check_psw_div").css('display', 'block');
+				$("#check_psw").html("账号密码不匹配");
+			}
+		}
+	});
 }
 
 var wait = 10;

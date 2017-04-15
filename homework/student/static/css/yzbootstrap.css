@@ -1,0 +1,62 @@
+@CHARSET "UTF-8";
+#main{
+    margin-top: 12%;
+}
+#main form #upload{
+    float: right;
+    margin-top: 7px;
+}
+#main form input[type="file"]{
+	width: 29px;
+	height: 32px;
+	float: right;
+    margin-top: 0px;
+    opacity: 0;
+    overflow: hidden;
+    position: relative;
+    left: 26px;
+}
+#main form #upload{
+    display: inline-block;
+    color: lightslategrey;
+    font-size: 25px;
+    line-height: 15px;
+}
+#main form .panel-body #fileName{
+    text-align: center;
+    color: blue;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f1f1f1;
+}
+#exampleName{
+	text-align: center;
+    color: green;
+    /* padding-bottom: 10px;
+    border-bottom: 1px solid #f1f1f1; */
+}
+#main form .panel-footer button{
+    border-radius: 3px;
+    border:1px solid #444444;
+    background-color: #ffffff;
+    padding: 6px;
+    margin-left: 41%;
+}
+footer{
+    position: fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    color: #697188;
+}
+footer #foot{
+    text-align: center;
+}
+footer #foot a{
+    text-decoration: none;
+    cursor: pointer;
+    color: #0f0f0f;
+    font-size: small;
+}
+footer #foot a:hover{
+    color: blue;
+}
