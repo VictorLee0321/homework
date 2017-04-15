@@ -1,0 +1,7 @@
+遇到问题：
+	python时区与本地时区，mysql时区不同
+		use TZ=false
+
+	文件写入ascii对不上utf8
+		sys.setdefaultencoding('utf-8')
+		str(myFile.name)

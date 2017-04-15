@@ -125,7 +125,11 @@ def uploadFile(request):
 		#for chunk in myFile.chunks():  # 分块写入文件
 			#destination.write(chunk)
 		print 'myFile name is: ', str(myFile.name)
-		destination = codecs.open(os.path.join("/file_homework/", str(myFile.name)), 'wb+')  # 打开特定的文件进行二进制的写操作
+		file_save = "/file_homework/" + str(task_id)
+		print 'file_save is: ' + file_save
+		if not os.path.exists(file_save):
+			os.makedirs(file_save, mode=0777)
+		destination = codecs.open(os.path.join(file_save, str(myFile.name)), 'wb+')  # 打开特定的文件进行二进制的写操作
 		for chunk in myFile.chunks():  # 分块写入文件
 			destination.write(chunk)
 		destination.close()
