@@ -14,7 +14,8 @@ class Clazz(models.Model):
     graduation = models.DateField()
 
     def __unicode__(self):
-        return u'%s_%s' % (self.clazz_id, self.clazz_name)
+        #return u'%s_%s' % (self.clazz_id, self.clazz_name)
+        return u'%s' % (self.clazz_id)
 
 class User(models.Model):
     role_choices = ((0, 'admin'), (1, 'teacher'), (2, 'student'), (3, 'guest'))
@@ -37,7 +38,8 @@ class Student(models.Model):
     clazz_id = models.ForeignKey(Clazz)
 
     def __unicode__(self):
-        return u'%s_%s' % (self.student_id, self.student_name)
+        #return u'%s_%s' % (self.student_id, self.student_name)
+        return u'%s' % (self.student_id)
 
 class Teacher(models.Model):
     sex_choices = ((0, 'female'), (1, 'male'))
@@ -46,7 +48,8 @@ class Teacher(models.Model):
     sex = models.IntegerField(choices=sex_choices, default=1)
 
     def __unicode__(self):
-        return u'%s_%s' % (self.teacher_id, self.teacher_name)
+        #return u'%s_%s' % (self.teacher_id, self.teacher_name)
+        return u'%s' % (self.teacher_id)
 
 class Course(models.Model):
     term_choices = ((1, '1'), (2, '2'))
@@ -58,7 +61,8 @@ class Course(models.Model):
     clazz_id = models.ForeignKey(Clazz)
 
     def __unicode__(self):
-        return u'%s_%s' % (self.course_id, self.course_name)
+        #return u'%s_%s' % (self.course_id, self.course_name)
+        return u'%s' % (self.course_id)
 
 class Admin(models.Model):
     admin_id = models.AutoField(primary_key=True)
@@ -76,7 +80,8 @@ class Task(models.Model):
     begin_remind = models.IntegerField()
 
     def __unicode__(self):
-        return u'%s_%s' % (self.task_id, self.task_name)
+        #return u'%s_%s' % (self.task_id, self.task_name)
+        return u'%s' % (self.task_id)
 
 class Finish(models.Model):
     task_id = models.ForeignKey(Task)

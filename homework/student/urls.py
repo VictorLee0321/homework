@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'index', views.index),
     url(r'loadkUser', views.loadkUser),
     url(r'updatePsw', views.updatePsw),
+    url(r'getUnsubmitCourse', views.getUnsubmitCourse),
 ]
