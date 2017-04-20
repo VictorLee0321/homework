@@ -46,12 +46,152 @@ $(function() {
     // test
     //getUnSubmitCourse();
 
+	$("#next_page").click(function() {
+		var page_row = $("#tbody tr").length;
+		if (page_row < 5)
+			return false;
+		var page_num = parseInt($("#page_num b").html()) + 1;
+		var hw_type = $("#student_panel_heading").html();
+		switch (hw_type) {
+		case "未交作业":
+			if (5 * (page_num - 2) + page_row == un_submit_homework.length)
+				return false;
+			showTBodyData(un_submit_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		case "班级作业":
+			if (5 * (page_num - 2) + page_row == class_homework.length)
+				return false;
+			showTBodyData(class_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		case "超期作业":
+			if (5 * (page_num - 2) + page_row == overtime_homework.length)
+				return false;
+			showTBodyData(overtime_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		case "已交作业":
+			if (5 * (page_num - 2) + page_row == submit_homework.length)
+				return false;
+			showTBodyData(submit_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		}
+	});
+
+	$("#btn_overtime").click(function() {
+		sort_click *= -1;
+		$("#page_num b").html("1");
+		var hw_type = $("#student_panel_heading").html();
+		var page_num = 1;
+		switch (hw_type) {
+		case "未交作业":
+			sortByTime(un_submit_homework);
+			showTBodyData(un_submit_homework, page_num);
+			break;
+		case "班级作业":
+			sortByTime(class_homework);
+			showTBodyData(class_homework, page_num);
+			break;
+		case "超期作业":
+			sortByTime(overtime_homework);
+			showTBodyData(overtime_homework, page_num);
+			break;
+		case "已交作业":
+			sortByTime(submit_homework);
+			showTBodyData(submit_homework, page_num);
+			break;
+		}
+	});
+
+	$("#previous_page").click(function() {
+		var page_num = parseInt($("#page_num b").html()) - 1;
+		if (page_num < 1)
+			return false;
+		var hw_type = $("#student_panel_heading").html();
+		switch (hw_type) {
+		case "未交作业":
+			showTBodyData(un_submit_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		case "班级作业":
+			showTBodyData(class_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		case "超期作业":
+			showTBodyData(overtime_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		case "已交作业":
+			showTBodyData(submit_homework, page_num);
+			$("#page_num b").html(page_num);
+			break;
+		}
+	});
+
+	$("#btn_unsubmit_homework").click(function() {
+		$("#page_num b").html("1");
+//		var page_num = $("#page_num b").html();
+//		console.log(un_submit_homework);
+//		showTBodyData(un_submit_homework, page_num);
+		if (null != un_submit_homework) {
+			var page_num = $("#page_num b").html();
+			showTBodyData(un_submit_homework, page_num);
+		} else {
+			getUnSubmitCourse();
+		}
+		$("#student_panel_heading").html("未交作业");
+	});
+
+	$("#btn_class_homework").click(function() {
+		$("#page_num b").html("1");
+		if (null != class_homework) {
+			var page_num = $("#page_num b").html();
+			showTBodyData(class_homework, page_num);
+		} else {
+			getClassHomework();
+		}
+//		console.log(class_homework);
+		$("#student_panel_heading").html("班级作业");
+	});
+
+	$("#btn_overtime_homework").click(function() {
+		$("#page_num b").html("1");
+		/*var page_num = $("#page_num b").html();
+//		console.log(un_submit_homework);
+		showTBodyData(un_submit_homework, page_num);*/
+//		console.log("click getOvertimeCourse3() function");
+		if (null != overtime_homework) {
+			var page_num = $("#page_num b").html();
+			showTBodyData(overtime_homework, page_num);
+		} else {
+			getOvertimeCourse3();
+		}
+		$("#student_panel_heading").html("超期作业");
+//		console.log("already getOvertimeCourse3() function");
+	});
+
+	$("#btn_submited_homework").click(function() {
+		$("#page_num b").html("1");
+		if (null != submit_homework) {
+			var page_num = $("#page_num b").html();
+			showTBodyData(submit_homework, page_num);
+		} else {
+			getSubmitCourse3();
+		}
+//		console.log(submit_homework);
+		$("#student_panel_heading").html("已交作业");
+	});
+
 });
 
 var un_submit_homework;
 var class_homework;
 var overtime_homework;
 var submit_homework;
+
+
 
 function showTBodyData(data, page_num) {
 	$("#tbody").empty();
@@ -109,6 +249,32 @@ function getUnSubmitCourse() {
 	});
 }
 
+function getClassHomework() {
+	var account = $.cookie("account");
+	var student_id = $.cookie("student_id");
+	var clazz_id = $.cookie("clazz_id");
+	$.ajax ({
+		url : "/student/getClassHomework",
+//		async: false,
+		type: "POST",
+		dataType : "json",
+		data : {"account":account, "student_id":student_id, "clazz_id":clazz_id},
+		success : function(data) {
+			// show data function for re use
+			var page_num = $("#page_num b").html();
+//			console.log(page_num);
+//			console.log(data);
+			class_homework = data;
+//			console.log(class_homework);
+			showTBodyData(class_homework, page_num);
+			// old
+			/*if (null != class_homework && null != submit_homework) {
+				getUnSubmitCourse3();
+			}*/
+		}
+	});
+}
+
 function updatePsw(account, old_psw, new_psw) {
 	$.ajax ({
 		url : "/student/updatePsw",
@@ -146,4 +312,19 @@ function writeLocation() {
             getUnSubmitCourse();
         }
     });
+}
+
+var sort_click = 1;
+
+function sortByTime(data) {
+	data.sort(function(a, b) {
+//		console.log(a.last_time);
+//		console.log(b.last_time);
+//		console.log(a.last_time > b.last_time);
+		if (-1 == sort_click) {
+			return a.last_time > b.last_time;;
+		} else {
+			return a.last_time < b.last_time;
+		}
+	});
 }

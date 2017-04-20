@@ -22,6 +22,30 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 # Create your views here.
 
+def getClassHomework(request):
+    if request.POST.has_key('clazz_id'):
+        clazz_id = request.POST['clazz_id']
+        student_id = request.POST['student_id']
+        account = request.POST['account']
+        # 该班级课程
+        courses = Course.objects.all().filter(clazz_id=clazz_id)
+        print courses
+        courses_ids = courses.values('course_id')
+        # 班级所有课程作业
+        tasks = Task.objects.all().filter(course_id__in=courses_ids)
+        print tasks
+        ret_dic = []
+        for pk in tasks.values('task_id'):
+            course_id = tasks.get(task_id=pk['task_id']).course_id
+            course_name = Course.objects.get(course_id = str(course_id)).course_name
+            task_name = tasks.get(task_id=pk['task_id']).task_name
+            last_time = tasks.get(task_id=pk['task_id']).last_time.strftime("%Y-%m-%d %H:%M:%S")
+            course_task_name = course_name + ":" + task_name
+            ret_dic.append({"task_id": pk['task_id'], "course_task_name": course_task_name, "last_time": str(last_time)})
+        ret_str_json = json.dumps(ret_dic)
+        print ret_str_json
+        return HttpResponse(ret_str_json)
+
 def getUnsubmitCourse(request):
     if request.POST.has_key('clazz_id'):
         clazz_id = request.POST['clazz_id']
