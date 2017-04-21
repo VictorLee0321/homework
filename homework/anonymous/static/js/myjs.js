@@ -371,7 +371,7 @@ function cicosShowTBodyData(data, page_num) {
 		row += "<td><input type=\"checkbox\"></td>";
 		row += "<td>" + rowData + "</td>";
 		row += "<td><button type=\"button\" id=\"btn_down" + (i % 10 + 1) + "\" class=\"btn btn-xs\"><span class=\"glyphicon glyphicon-download\"></span></button></td>";
-		row += "</tr>"
+		row += "</tr>";
 		$("#cicos_check_tbody").append(row);
 	}
 }

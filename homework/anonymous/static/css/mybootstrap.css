@@ -40,6 +40,11 @@
 	display: block;
 }
 
+/*#check_status_tips_div {
+	padding-right: 0px;
+	margin-right: 0px;
+}*/
+
 #cicos_send_all_email {
 	display: none;
 }

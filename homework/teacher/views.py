@@ -23,6 +23,43 @@ sys.setdefaultencoding('utf-8')
 
 # Create your views here.
 
+def cicosGetSubmitHomework(request):
+    if request.POST.has_key('task_id'):
+        task_id = request.POST['task_id']
+        try:
+            finishs = Finish.objects.all().filter(task_id=task_id).values("file_path")
+            print finishs
+            finishs = json.dumps(list(finishs))
+            return HttpResponse(finishs)
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse('none')
+
+def cicosLoadExp(request):
+    if request.POST.has_key('course_id'):
+        course_id = request.POST['course_id']
+        try:
+            tasks = Task.objects.all().filter(course_id=course_id).values("task_id", "task_name")
+            tasks = json.dumps(list(tasks))
+            return HttpResponse(tasks)
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse('none')
+    return HttpResponse('none')
+
+def cicosLoadCourse(request):
+    if request.POST.has_key('teacher_id'):
+        teacher_id = request.POST['teacher_id']
+        try:
+            courses = Course.objects.all().filter(teacher_id = teacher_id).values("course_id", "course_name")
+            courses = list(courses)
+            courses = json.dumps(courses)
+            return HttpResponse(courses)
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse('none')
+    return HttpResponse('none')
+
 def index(request):
     return render(request, 'teacher/teacher_index.html')
 

@@ -29,4 +29,7 @@ urlpatterns = [
     #url(r'getSubmitCourse', views.getSubmitCourse),
     url(r'loadTeacher', views.loadTeacher),
     url(r'updatePsw', views.updatePsw),
+    url(r'cicosLoadCourse', views.cicosLoadCourse),
+    url(r'cicosLoadExp', views.cicosLoadExp),
+    url(r'cicosGetSubmitHomework', views.cicosGetSubmitHomework),
 ]

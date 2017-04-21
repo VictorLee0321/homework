@@ -116,7 +116,8 @@ def uploadFile(request):
 	if request.method == "POST":
 		student_id = request.POST['student_id']
 		task_id = request.POST['task_id']
-		print 's_id,tid is: ', student_id, task_id
+		fileType = request.POST['fileType']
+		print 's_id,tid is,fileType: ', student_id, task_id, fileType
 		myFile = request.FILES.get("file", None)
 		if not myFile:
 			print 'no files for upload!'
@@ -129,14 +130,26 @@ def uploadFile(request):
 		print 'file_save is: ' + file_save
 		if not os.path.exists(file_save):
 			os.makedirs(file_save, mode=0777)
-		destination = codecs.open(os.path.join(file_save, str(myFile.name)), 'wb+')  # 打开特定的文件进行二进制的写操作
+		student = Student.objects.get(student_id=student_id)
+		task = Task.objects.get(task_id=task_id)
+		# make the file_path
+		student_name = student.student_name
+		task_name = task.task_name
+		course_id = task.course_id
+		course_name = Course.objects.get(course_id=str(course_id)).course_name
+		file_new_name = str(student_id) + '-' + str(student_name) + '-' + str(course_name) + '-' + str(task_name) + '.' + str(fileType)
+
+		destination = codecs.open(os.path.join(file_save, str(file_new_name)), 'wb+')  # 打开特定的文件进行二进制的写操作
+		#destination = codecs.open(os.path.join(file_save, str(myFile.name)), 'wb+')  # 打开特定的文件进行二进制的写操作 origin
 		for chunk in myFile.chunks():  # 分块写入文件
 			destination.write(chunk)
 		destination.close()
 		print 'write finish by codecs---------------------'
-
-		student = Student.objects.get(student_id=student_id)
-		task = Task.objects.get(task_id=task_id)
+		#student = Student.objects.get(student_id=student_id)
+		#task = Task.objects.get(task_id=task_id)
+		# full save file path
+		file_full_path = file_save + '/' + file_new_name
+		print 'file_full_path is: ' + file_full_path
 		last_time = task.last_time
 		print 'last_time is: ', last_time
 		last_time = time.mktime(time.strptime(str(last_time), "%Y-%m-%d %H:%M:%S"))
@@ -149,7 +162,8 @@ def uploadFile(request):
 			is_overtime = True
 			ret_code = 1
 		print 'is_overtime is: ', is_overtime
-		finish = Finish(task_id=task, student_id=student, is_overtime = is_overtime)
+
+		finish = Finish(task_id=task, student_id=student, is_overtime = is_overtime, file_path = file_full_path)
 		try:
 			Finish.objects.filter(Q(task_id=task_id), Q(student_id=student_id)).delete()
 		except Exception, e:

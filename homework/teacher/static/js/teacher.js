@@ -43,9 +43,10 @@ $(function () {
     });
 
     $("#check_course").change(function() {
-		var account = getCookie("account");
-		var course = $("#check_course option:selected").text();
-		cicosLoadExp(account, course);
+		var account = $.cookie("account");
+		var teacher_id = $.cookie("teacher_id");
+		var course_id = $("#check_course option:selected").val();
+		cicosLoadExp(course_id);
 		$("#check_status").val("0");
 		$("#cicos_page_num b").html("1");
 		$("#cicos_check_download").css("display", "inline-block");
@@ -53,10 +54,12 @@ $(function () {
 	});
 
 	$("#check_exp").change(function() {
-		var account = getCookie("account");
+		/*var account = $.cookie("account");
+		var teacher_id = $.cookie("teacher_id");
 		var course = $("#check_course option:selected").text();
-		var exp = $("#check_exp option:selected").text();
-		cicosGetSubmitHomework(account, course, exp);
+		var exp = $("#check_exp option:selected").text();*/
+		var task_id = $("#check_exp option:selected").val();
+		cicosGetSubmitHomework(task_id);
 		$("#check_status").val("0");
 		$("#cicos_page_num b").html("1");
 		$("#cicos_check_download").css("display", "inline-block");
@@ -64,14 +67,16 @@ $(function () {
 	});
 
 	$("#check_status").change(function() {
-		var account = getCookie("account");
+	    var task_id = $("#check_exp option:selected").val();
+		var account = $.cookie("account");
+		var teacher_id = $.cookie("teacher_id");
 		var course = $("#check_course option:selected").text();
 		var exp = $("#check_exp option:selected").text();
 		var status = $("#check_status option:selected").text();
 		$("#cicos_page_num b").html("1");
 		switch (status) {
 		case "已交":
-			cicosGetSubmitHomework(account, course, exp);
+			cicosGetSubmitHomework(task_id);
 			$("#cicos_check_download").css("display", "inline-block");
 			$("#cicos_send_all_email").css("display", "none");
 			break;
@@ -88,9 +93,9 @@ $(function () {
 		}
 	});
 
-	/*var cicos_submit_homework;
-	var cicos_un_submit_homework;
-	var cicos_overtime_homework;*/
+var cicos_submit_homework;
+var cicos_un_submit_homework;
+var cicos_overtime_homework;
 
 	$("#cicos_next_page").click(function() {
 		var page_row = $("#cicos_check_tbody tr").length;
@@ -164,6 +169,8 @@ function updatePsw(account, old_psw, new_psw) {
 	});
 }
 
+var teacher_id;
+
 function writeLocation() {
     $.ajax ({
         url : "/teacher/loadTeacher",
@@ -177,6 +184,79 @@ function writeLocation() {
             var locate_display = data.teacher_id + ":" + data.teacher_name;
             $("#location").html(locate_display);
             //getUnSubmitCourse();
+            teacher_id = $.cookie('teacher_id');
+            cicosLoadCourse(teacher_id);
         }
     });
 }
+
+function cicosLoadCourse(teacher_id) {
+	$("#check_course").empty();
+	$.ajax ({
+		url : "/teacher/cicosLoadCourse",
+		type : "POST",
+		dataType : "json",
+		data : {"teacher_id":teacher_id},
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				var course = data[i];
+				$("#check_course").append("<option value='" + course.course_id + "'>" + course.course_name + "</option>");
+			}
+			var course_name = $("#check_course option:selected").text();
+			var course_id = $("#check_course option:selected").val();
+			console.log(course_id + "_" + course_name);
+			cicosLoadExp(course_id);
+		}
+	});
+}
+
+function cicosLoadExp(course_id) {
+	$("#check_exp").empty();
+	$.ajax ({
+		url : "/teacher/cicosLoadExp",
+		type : "POST",
+		dataType : "json",
+		data : {"course_id":course_id},
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				var exp = data[i];
+				$("#check_exp").append("<option value='" + exp.task_id + "'>" + exp.task_name + "</option>");
+			}
+			var task_id = $("#check_exp option:selected").val();
+			console.log('select task_id: ' + task_id);
+			// show had submit homework status
+			cicosGetSubmitHomework(task_id);
+		}
+	});
+}
+
+function cicosShowTBodyData(data, page_num) {
+	$("#cicos_check_thead").empty();
+	var rowHead = "<tr><th></th><th>文件名</th><th>下载</th></tr>";
+	$("#cicos_check_thead").append(rowHead);
+	$("#cicos_check_tbody").empty();
+	for (var i = 10 * (page_num - 1); i < 10 * page_num && i < data.length; i++) {
+		var rowData = data[i].file_path;
+		var row = "<tr>";
+		row += "<td><input type=\"checkbox\"></td>";
+		row += "<td>" + rowData + "</td>";
+		row += "<td><button type=\"button\" id=\"btn_down" + (i % 10 + 1) + "\" class=\"btn btn-xs\"><span class=\"glyphicon glyphicon-download\"></span></button></td>";
+		row += "</tr>";
+		$("#cicos_check_tbody").append(row);
+	}
+}
+
+function cicosGetSubmitHomework(task_id) {
+	$.ajax ({
+		url : "/teacher/cicosGetSubmitHomework",
+		type : "POST",
+		dataType : "json",
+		data : {"task_id":task_id},
+		success : function(data) {
+			var page_num = $("#cicos_page_num b").html();
+			cicos_submit_homework = data;
+			cicosShowTBodyData(cicos_submit_homework, page_num);
+		}
+	});
+}
+
