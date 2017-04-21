@@ -3,13 +3,6 @@
  */
 
 $(function() {
-	if ($.cookie("type") != null) {
-		if ($.cookie("type") == "student") {
-			location.href = 'student/index';
-		} else if ($.cookie("type") == "teacher") {
-			location.href = 'teacher/index';
-		}
-	}
 	if ($.cookie("clazz") != null) {
 		$("#location").html($.cookie("clazz"));
 		console.log('clazz_id is: ' + $.cookie("clazz").split(":")[0]);
@@ -386,32 +379,54 @@ $(document).ready(function() {
 
 function checkUser(account, psw) {
 	$.ajax ({
-		url : "/student/checkUser",
+		url : "/checkUser",
 		async: true,
 		type : "POST",
 		dataType : "json",
 		data : {"account":account,"password":psw},
 		success : function(data) {
+			// ordinary
+			if (data >= 0 && data <= 3) {
+				document.cookie = "account=" + escape(signin_account);
+				document.cookie = "password=" + escape(signin_psw);
+				$("#signinModal").modal("hide");
+				$("#signin").css("display","none");
+				$("#signup").css("display","none");
+				$("#locate").css("display","none");
+				$("#main").css("display","none");
+				$("#logout").css("display","inline-block");
+				$("#user").css("display","inline-block");
+				$("#user_account").html(signin_account);
+			}
+			// no same user
 			if (0 == data) {
-				// admin
+				// admin and cicos
 
 			} else if (1 == data) {
-				// teacher
-				$.cookie("type", "teacher", {expires:30, path:"/"});
-				$.cookie("account", account, {expires:30, path:"/"});
-				$.cookie("password", psw, {expires:30, path:"/"});
-				location.href = 'teacher/index';
-
-			} else if (3 == data) {
-				// guest
+				// admin
 
 			} else if (2 == data) {
-				// student
-				$.cookie("type", "student", {expires:30, path:"/"});
-				$.cookie("account", account, {expires:30, path:"/"});
-				$.cookie("password", psw, {expires:30, path:"/"});
-				location.href = 'student/index';
+				// cicos
+				document.cookie = "type=" + escape("cicos");
+				// show self
+				$("#afterCicosLogin").css("display","block");
+				cicosLoadCourse(signin_account);
+				// show check
+				$("#div_check_homework").css("display", "block");
+				// hide issue div
+				$("#div_issue_homework").css("display", "none");
+				// hide add student div
+				$("#div_add_student").css("display", "none");
+				// hide other
+				$("#afterStudentLogin").css("display","none");
 
+			} else if (3 == data) {
+				// student
+				document.cookie = "type=" + escape("student");
+				$("#afterStudentLogin").css("display","block");
+				getUnSubmitCourse3();
+				// hide
+				$("#afterCicosLogin").css("display","none");
 			} else if (4 == data) {
 				$("#check_psw_div").css('display', 'block');
 				$("#check_psw").html("此账号尚未注册");
