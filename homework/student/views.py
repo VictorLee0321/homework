@@ -61,7 +61,7 @@ def getSubmitCourse(request):
         ret_str_json = json.dumps(ret_dic)
         print ret_str_json
         return HttpResponse(ret_str_json)
-    
+
 def getOvertimeCourse(request):
     if request.POST.has_key('clazz_id'):
         clazz_id = request.POST['clazz_id']

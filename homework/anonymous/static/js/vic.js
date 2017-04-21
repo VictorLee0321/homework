@@ -395,6 +395,10 @@ function checkUser(account, psw) {
 
 			} else if (1 == data) {
 				// teacher
+				$.cookie("type", "teacher", {expires:30, path:"/"});
+				$.cookie("account", account, {expires:30, path:"/"});
+				$.cookie("password", psw, {expires:30, path:"/"});
+				location.href = 'teacher/index';
 
 			} else if (3 == data) {
 				// guest
