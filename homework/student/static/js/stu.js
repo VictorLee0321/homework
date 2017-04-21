@@ -166,7 +166,7 @@ $(function() {
 			var page_num = $("#page_num b").html();
 			showTBodyData(overtime_homework, page_num);
 		} else {
-			getOvertimeCourse3();
+			getOvertimeCourse();
 		}
 		$("#student_panel_heading").html("超期作业");
 //		console.log("already getOvertimeCourse3() function");
@@ -178,7 +178,7 @@ $(function() {
 			var page_num = $("#page_num b").html();
 			showTBodyData(submit_homework, page_num);
 		} else {
-			getSubmitCourse3();
+			getSubmitCourse();
 		}
 //		console.log(submit_homework);
 		$("#student_panel_heading").html("已交作业");
@@ -267,6 +267,55 @@ function getClassHomework() {
 			class_homework = data;
 //			console.log(class_homework);
 			showTBodyData(class_homework, page_num);
+			// old
+			/*if (null != class_homework && null != submit_homework) {
+				getUnSubmitCourse3();
+			}*/
+		}
+	});
+}
+
+function getOvertimeCourse() {
+	var account = $.cookie("account");
+	var student_id = $.cookie("student_id");
+	var clazz_id = $.cookie("clazz_id");
+	$.ajax ({
+		url : "/student/getOvertimeCourse",
+//		async: false,
+		type: "POST",
+		dataType : "json",
+		data : {"account":account, "student_id":student_id, "clazz_id":clazz_id},
+		success : function(data) {
+			// show data function for re use
+			var page_num = $("#page_num b").html();
+//			console.log(page_num);
+//			console.log(data);
+			overtime_homework = data;
+//			console.log(overtime_homework);
+			showTBodyData(overtime_homework, page_num);
+		}
+	});
+}
+
+function getSubmitCourse() {
+	var account = $.cookie("account");
+	var student_id = $.cookie("student_id");
+	var clazz_id = $.cookie("clazz_id");
+	$.ajax ({
+		url : "/student/getSubmitCourse",
+//		async: false,
+		type : "POST",
+		dataType : "json",
+		data : {"account":account, "student_id":student_id, "clazz_id":clazz_id},
+		success : function(data) {
+			// show data function for re use
+			var page_num = $("#page_num b").html();
+//			console.log(page_num);
+//			console.log(data);
+			submit_homework = data;
+//			console.log(submit_homework);
+//			console.log(submit_homework);
+			showTBodyData(submit_homework, page_num);
 			// old
 			/*if (null != class_homework && null != submit_homework) {
 				getUnSubmitCourse3();

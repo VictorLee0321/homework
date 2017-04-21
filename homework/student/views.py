@@ -22,6 +22,97 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 # Create your views here.
 
+def getSubmitCourse(request):
+    if request.POST.has_key('clazz_id'):
+        clazz_id = request.POST['clazz_id']
+        student_id = request.POST['student_id']
+        account = request.POST['account']
+        # 该班级课程
+        courses = Course.objects.all().filter(clazz_id=clazz_id)
+        print courses
+        courses_ids = courses.values('course_id')
+        # 班级所有课程作业
+        tasks = Task.objects.all().filter(course_id__in=courses_ids)
+        print tasks
+        # 学生已经完成的作业
+        finishs = Finish.objects.all().filter(student_id=student_id)
+        print finishs
+        # 学生未完成的作业
+        finishs_task_ids = finishs.values('task_id')
+        finishs_tasks = tasks.filter(Q(task_id__in=finishs_task_ids))
+        ret_dic = []
+        for pk in finishs_tasks.values("task_id"):
+            print ',,,,,,,,,,,,,,,,,,,,,,,,,'
+            print str(pk)
+            #print not_finishs.get(task_id = pk['task_id']).course_id
+            course_id = finishs_tasks.get(task_id=pk['task_id']).course_id
+            print course_id
+            course_name = Course.objects.get(course_id = str(course_id)).course_name
+            print course_name
+            task_name = finishs_tasks.get(task_id=pk['task_id']).task_name
+            print task_name
+            #last_time = not_finishs.get(task_id=pk['task_id']).last_time.strftime("%Y-%m-%d %H:%M:%S")
+            last_time = finishs_tasks.get(task_id=pk['task_id']).last_time.strftime("%Y-%m-%d %H:%M:%S")
+            print last_time
+            print '-------------------------'
+            course_task_name = course_name + ":" + task_name
+            ret_dic.append({"task_id": pk['task_id'], "course_task_name": course_task_name, "last_time": str(last_time)})
+            print 'add submit task finish---'
+        ret_str_json = json.dumps(ret_dic)
+        print ret_str_json
+        return HttpResponse(ret_str_json)
+    
+def getOvertimeCourse(request):
+    if request.POST.has_key('clazz_id'):
+        clazz_id = request.POST['clazz_id']
+        student_id = request.POST['student_id']
+        account = request.POST['account']
+        # 该班级课程
+        courses = Course.objects.all().filter(clazz_id=clazz_id)
+        print courses
+        courses_ids = courses.values('course_id')
+        # 班级所有课程作业
+        tasks = Task.objects.all().filter(course_id__in=courses_ids)
+        print tasks
+        # 学生已经完成的作业
+        finishs = Finish.objects.all().filter(student_id=student_id)
+        print finishs
+        # 学生未完成的作业
+        finishs_task_ids = finishs.values('task_id')
+        not_finishs = tasks.filter(~Q(task_id__in=finishs_task_ids))
+        ret_dic = []
+        for pk in not_finishs.values("task_id"):
+            print ',,,,,,,,,,,,,,,,,,,,,,,,,'
+            print str(pk)
+            #print not_finishs.get(task_id = pk['task_id']).course_id
+            course_id = not_finishs.get(task_id=pk['task_id']).course_id
+            print course_id
+            course_name = Course.objects.get(course_id = str(course_id)).course_name
+            print course_name
+            task_name = not_finishs.get(task_id=pk['task_id']).task_name
+            print task_name
+            #last_time = not_finishs.get(task_id=pk['task_id']).last_time.strftime("%Y-%m-%d %H:%M:%S")
+            last_time = not_finishs.get(task_id=pk['task_id']).last_time.strftime("%Y-%m-%d %H:%M:%S")
+            print last_time
+            print '-------------------------'
+            last_time = not_finishs.get(task_id=pk['task_id']).last_time
+            print last_time
+            print type(last_time)
+            now_time = time.time()
+            print now_time
+            last_time2time = time.mktime(last_time.timetuple())
+            print last_time2time
+            if (now_time > last_time2time):
+                print 'overtime task---'
+                print last_time
+                course_task_name = course_name + ":" + task_name
+                ret_dic.append({"task_id": pk['task_id'], "course_task_name": course_task_name, "last_time": str(last_time)})
+                print 'add overtime task finish---'
+        ret_str_json = json.dumps(ret_dic)
+        print ret_str_json
+        return HttpResponse(ret_str_json)
+
+
 def getClassHomework(request):
     if request.POST.has_key('clazz_id'):
         clazz_id = request.POST['clazz_id']
