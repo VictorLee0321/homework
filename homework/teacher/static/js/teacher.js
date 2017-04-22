@@ -156,6 +156,7 @@ $(function () {
 		$("#cicos_check_download").css("display", "inline-block");
 		$("#cicos_send_all_email").css("display", "none");
 		// hide others cicos div
+        $("#div_issue_course").css("display", "none");
 		$("#div_issue_homework").css("display", "none");
 		$("#div_add_student").css("display", "none");
 	});
@@ -167,10 +168,69 @@ $(function () {
 		cicos_overtime_homework = null;
 		$("#div_check_homework").css("display", "none");
 		$("#div_add_student").css("display", "none");
+		$("#div_issue_course").css("display", "none");
 		// show self
 		$("#div_issue_homework").css("display", "block");
 		$("#sure_add_tips_div").css("display", "none");
+		teacherLoadCourse(teacher_id);
 	});
+	
+	$("#btn_add_course").click(function () {
+
+	    $("#div_check_homework").css("display", "none");
+		$("#div_add_student").css("display", "none");
+		$("#div_issue_homework").css("display", "none");
+        // show self
+        $("#div_issue_course").css("display", "block");
+        $("#sure_add_course_tips_div").css("display", "none");
+        teacherLoadClazz(teacher_id);
+        
+    });
+
+	$("#btn_add_student").click(function() {
+		// hide other and set var null
+		$("#div_check_homework").css("display", "none");
+		$("#div_issue_homework").css("display", "none");
+		$("#div_issue_course").css("display", "none");
+		// show self
+		$("#xls_tips").html("");
+		$("#div_add_student").css("display", "block");
+	});
+	
+	$("#sure_add_course").click(function () {
+        var add_course_name = $("#add_course_name").val();
+        var clazz_id = $("#select_clazz option:selected").val();
+        var teach_year = $("#teach_year").val();
+        var term = $("#term option:selected").val();
+        if ("" != add_course_name && "" != clazz_id && "" != teach_year && "" != term) {
+            teacherAddCourse(teacher_id, add_course_name, clazz_id, teach_year, term);
+        } else {
+            return false;
+        }
+
+    });
+
+	$("#sure_issue_course").click(function() {
+		//var issue_course_name = $("#issue_course_name").val();
+        var issue_course_id = $("#select_issue_course_name option:selected").val();
+		var issue_task_name = $("#issue_exp_num").val();
+		var issue_last_time = $("#issue_last_time").val();
+		var begin_remind = $("#begin_remind").val();
+		//var isNum = parseInt(issue_exp_num);
+		if ("" != issue_last_time && "" != issue_task_name && "" != issue_course_id && "" != begin_remind) {
+			cicosAddTask(teacher_id, issue_course_id, issue_task_name, issue_last_time, begin_remind);
+		} else {
+			return false;
+		}
+	});
+
+	$("#datetimepicker4teach_year").datetimepicker({
+	    minView: "month", //选择日期后，不会再跳转去选择时分秒
+        language:  'zh-CN',
+        format: 'yyyy-mm-dd',
+        todayBtn:  1,
+        autoclose: 1,
+    });
 
 	$(".date").datetimepicker({
 //		format:yyyy-mm-dd,
@@ -183,7 +243,107 @@ $(function () {
 		showMeridian:1,
 	});
 
+	$("#xls_upload").click(function() {
+		var xls_name = $("#xls_file").val();
+		if ("" != xls_name) {
+//			console.log(xls_name);
+			//var account = getCookie("account");
+			var xls_file = document.getElementById('xls_file').files[0];
+			uploadXlsFile(teacher_id, xls_file);
+		} else {
+//			console.log("no select xls file");
+			return false;
+		}
+	});
+
 });
+
+function createXMLHttpRequest() {
+	if (window.XMLHttpRequest) {
+		// Mozilla
+		xhr = new XMLHttpRequest();
+	} else {
+		// IE
+		if (window.ActiveXObject) {
+			try {
+				xhr = new ActiveXObject("Msxml2.XMLHTTP");
+			} catch (e) {
+				try {
+					xhr = new ActiveXObject("Microsoft.XMLHTTP");
+				} catch (e) {
+				}
+			}
+		}
+	}
+}
+
+function uploadXlsFile(teacher_id, xls_file) {
+	var fd = new FormData();
+	fd.append("teacher_id", teacher_id);
+	fd.append("xls_file", xls_file);
+	createXMLHttpRequest();
+	xhr.open("POST", "uploadXlsFile");
+	xhr.send(fd);
+	xhr.onreadystatechange = function() {
+		if (4 == xhr.readyState) {
+			if (200 == xhr.status) {
+				var responseText = xhr.responseText;
+				if (0 == responseText) {
+					// 导入成功，请查看
+					$("#xls_tips").html("导入成功");
+					$("#xls_tips").css("color", "green");
+				} else if (1 == responseText) {
+					$("#xls_tips").html("名单已存在");
+					$("#xls_tips").css("color", "red");
+				} else {
+					// 导入失败，请重试
+					$("#xls_tips").html("有误,请重试");
+					$("#xls_tips").css("color", "red");
+				}
+			}
+		}
+	};
+}
+
+function teacherAddCourse(teacher_id, add_course_name, clazz_id, teach_year, term) {
+    $.ajax ({
+		url : "/teacher/teacherAddCourse",
+		type : "POST",
+		dataType : "text",
+		data : {"teacher_id":teacher_id,"add_course_name":add_course_name,"clazz_id":clazz_id,"teach_year":teach_year,"term":term},
+		success : function(data) {
+			if (0 == data) {
+				$("#sure_add_course_tips_div").css("display", "block");
+				$("#sure_add_course_tips").html("添加成功");
+				$("#sure_add_course_tips").css("color", "green");
+			} else {
+				$("#sure_add_course_tips_div").css("display", "block");
+				$("#sure_add_course_tips").html("添加失败，课程名重复，请重试");
+				$("#sure_add_course_tips").css("color", "red");
+			}
+		}
+	});
+}
+
+function cicosAddTask(teacher_id, issue_course_id, issue_task_name, issue_last_time, begin_remind) {
+	$.ajax ({
+		url : "/teacher/cicosAddTask",
+		type : "POST",
+		dataType : "text",
+		data : {"teacher_id":teacher_id,"issue_course_id":issue_course_id,"issue_task_name":issue_task_name,"issue_last_time":issue_last_time,"begin_remind":begin_remind},
+		success : function(data) {
+			if (0 == data) {
+				$("#sure_add_tips_div").css("display", "block");
+				$("#sure_add_tips").html("添加成功");
+				$("#sure_add_tips").css("color", "green");
+			} else {
+				$("#sure_add_tips_div").css("display", "block");
+				$("#sure_add_tips").html("添加失败，作业名重复，请重试");
+				$("#sure_add_tips").css("color", "red");
+			}
+		}
+	});
+}
 
 var cicos_submit_homework;
 var cicos_un_submit_homework;
@@ -229,6 +389,45 @@ function writeLocation() {
             cicosLoadCourse(teacher_id);
         }
     });
+}
+
+function teacherLoadClazz(teacher_id) {
+    $("#select_clazz").empty();
+	$.ajax ({
+		url : "/teacher/teacherLoadClazz",
+		type : "POST",
+		dataType : "json",
+		data : {"teacher_id":teacher_id},
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				var clazz = data[i];
+				$("#select_clazz").append("<option value='" + clazz.clazz_id + "'>" + clazz.clazz_name + "</option>");
+			}
+			//var course_name = $("#select_issue_course_name option:selected").text();
+			//var course_id = $("#select_issue_course_name option:selected").val();
+			//console.log('select_issue_course_id_name is: ' + course_id + "_" + course_name);
+		}
+	});
+}
+
+function teacherLoadCourse(teacher_id) {
+	$("#select_issue_course_name").empty();
+	$.ajax ({
+		url : "/teacher/cicosLoadCourse",
+		type : "POST",
+		dataType : "json",
+		data : {"teacher_id":teacher_id},
+		success : function(data) {
+			for (var i = 0; i < data.length; i++) {
+				var course = data[i];
+				$("#select_issue_course_name").append("<option value='" + course.course_id + "'>" + course.course_name + "</option>");
+			}
+			var course_name = $("#select_issue_course_name option:selected").text();
+			var course_id = $("#select_issue_course_name option:selected").val();
+			console.log('select_issue_course_id_name is: ' + course_id + "_" + course_name);
+			//cicosLoadExp(course_id);
+		}
+	});
 }
 
 function cicosLoadCourse(teacher_id) {

@@ -23,6 +23,14 @@ sys.setdefaultencoding('utf-8')
 
 # Create your views here.
 
+def uploadXlsFile(request):
+    if request.method == "POST":
+        teacher_id = request.POST['teacher_id']
+        print 'steacher_id: ', teacher_id
+        xls_file = request.FILES.get("xls_file", None)
+        return HttpResponse("2")
+    return HttpResponse("2")
+
 def cicosGetUnsubmitHomework(request):
     if request.POST.has_key('task_id'):
         task_id = request.POST['task_id']
@@ -82,6 +90,52 @@ def cicosLoadExp(request):
             return HttpResponse('none')
     return HttpResponse('none')
 
+def teacherAddCourse(request):
+    if request.POST.has_key('teacher_id'):
+        teacher_id = request.POST['teacher_id']
+        course_name = request.POST['add_course_name']
+        clazz_id = request.POST['clazz_id']
+        teach_year = request.POST['teach_year']
+        term = request.POST['term']
+        try:
+            course_exist = Course.objects.all().filter(Q(teacher_id=teacher_id), Q(clazz_id=clazz_id), Q(course_name=course_name))
+            if len(course_exist) > 0:
+                print 'aready have this course_name'
+                return HttpResponse("2")
+            teacher = Teacher.objects.get(teacher_id=teacher_id)
+            clazz = Clazz.objects.get(clazz_id=clazz_id)
+            Course.objects.create(course_name=course_name, teach_year=teach_year, term=term,teacher_id=teacher,clazz_id=clazz)
+            return HttpResponse("0")
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse("2")
+        return HttpResponse("2")
+
+def cicosAddTask(request):
+    if request.POST.has_key('teacher_id'):
+        teacher_id = request.POST['teacher_id']
+        course_id = request.POST['issue_course_id']
+        issue_task_name = request.POST['issue_task_name']
+        issue_last_time = request.POST['issue_last_time']
+        begin_remind = request.POST['begin_remind']
+        print type(begin_remind)
+        print teacher_id, course_id, issue_task_name, issue_last_time
+        try:
+            task_exist = Task.objects.all().filter(Q(course_id=course_id), Q(task_name=issue_task_name))
+            print task_exist
+            print len(task_exist)
+            print type(len(task_exist))
+            if len(task_exist) > 0:
+                print 'aready have this task_name'
+                return HttpResponse("2")
+            course = Course.objects.get(course_id=course_id)
+            Task.objects.create(task_name=issue_task_name, course_id=course, last_time=issue_last_time, begin_remind=begin_remind)
+            return HttpResponse("0")
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse("2")
+        return HttpResponse('2')
+
 def cicosLoadCourse(request):
     if request.POST.has_key('teacher_id'):
         teacher_id = request.POST['teacher_id']
@@ -90,6 +144,19 @@ def cicosLoadCourse(request):
             courses = list(courses)
             courses = json.dumps(courses)
             return HttpResponse(courses)
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse('none')
+    return HttpResponse('none')
+
+def teacherLoadClazz(request):
+    if request.POST.has_key('teacher_id'):
+        teacher_id = request.POST['teacher_id']
+        try:
+            clazzs = Clazz.objects.all().values("clazz_id", "clazz_name")
+            clazzs = list(clazzs)
+            clazzs = json.dumps(clazzs)
+            return HttpResponse(clazzs)
         except Exception, e:
             print Exception, ":", e
             return HttpResponse('none')

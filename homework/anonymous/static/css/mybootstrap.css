@@ -53,6 +53,10 @@
 	display: none;
 }
 
+#div_issue_course {
+	display: none;
+}
+
 #div_add_student {
 	display: none;
 }

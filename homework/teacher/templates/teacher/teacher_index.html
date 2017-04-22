@@ -166,19 +166,33 @@
 					<div class="modal-body">
 						<div class="form-horizontal">
 							<div class="form-group">
-								<label class="control-label col-md-2" for="issue_course_name">课&nbsp;&nbsp;&nbsp;程&nbsp;&nbsp;&nbsp;名:</label>
-								<div class="col-md-9">
+								<label class="control-label col-md-2" for="issue_course_name">课&nbsp;&nbsp;&nbsp;程&nbsp;&nbsp;&nbsp;名&nbsp;&nbsp;&nbsp;称:</label>
+								<!--<div class="col-md-9">
 									<input type="text" class="form-control" id="issue_course_name" placeholder="请输入课程名">
+								</div>-->
+								<div class="col-md-9" id="issue_course_name">
+									<select class="form-control" id="select_issue_course_name">
+										<option>专业课程名</option>
+										<!--<option>JAVA应用技术</option>
+										<option>计算机图形学</option>
+										<option>管理信息系统</option>-->
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
-								<label  class="control-label col-md-2" for="issue_exp_num">作&nbsp;&nbsp;&nbsp;业&nbsp;&nbsp;&nbsp;名:</label>
+								<label  class="control-label col-md-2" for="issue_exp_num">作&nbsp;&nbsp;&nbsp;业&nbsp;&nbsp;&nbsp;名&nbsp;&nbsp;&nbsp;称:</label>
 								<div class="col-md-9">
 									<input type="text" class="form-control" id="issue_exp_num" placeholder="请输入作业名">
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="control-label col-md-2" for="issue_last_time">截&nbsp;&nbsp;&nbsp;止&nbsp;&nbsp;&nbsp;日:</label>
+								<label  class="control-label col-md-2" for="begin_remind">提&nbsp;&nbsp;&nbsp;醒&nbsp;&nbsp;&nbsp;天&nbsp;&nbsp;&nbsp;数:</label>
+								<div class="col-md-9">
+									<input type="number" class="form-control" id="begin_remind" placeholder="请输入邮件截止时间前提前提醒天数">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-2" for="issue_last_time">截&nbsp;&nbsp;&nbsp;止&nbsp;&nbsp;&nbsp;时&nbsp;&nbsp;&nbsp;间:</label>
 								<div class="col-md-9 input-append date" id="datetimepicker" data-date="10-01-2016" data-date-format="yyyy-mm-dd hh:ii:ss">
 									<input type="text" class="span2 form-control" id="issue_last_time" value="2016-10-01 21:30:00">
 									<span class="add-on"><i class="icon-remove"></i></span>
@@ -194,7 +208,7 @@
 								<div class="col-md-offset-2 col-md-7"></div>
 								<div>
 									<button type="button" id="sure_issue_course" class="btn btn-sm btn-success">
-										保存课程&nbsp;<span class="glyphicon glyphicon-ok-sign"></span>
+										保存作业&nbsp;<span class="glyphicon glyphicon-ok-sign"></span>
 									</button>
 								</div>
 							</div>
@@ -204,11 +218,11 @@
 			<div class="col-md-1"></div>
 	</div>
 	<div class="col-md-8" id="div_add_student">
-			<div class="col-md-offset-1">
+			<div class="col-md-offset-0">
 				<div class="panel panel-default">
 						<!-- panel-heading begin -->
 						<div class="panel-heading">
-							<p>excel表导入格式前四行如下:</p>
+							<p>excel表导入格式如下:</p>
 						</div>
 						<!-- panel-heading end -->
 						<div class="panel-body" style="padding-bottom:0px">
@@ -217,23 +231,31 @@
 									<tr>
 										<th>学号</th>
 										<th>姓名</th>
+										<th>性别</th>
+										<th>班别</th>
 									</tr>
 								</thead>
 								<tbody id="tbody_add_student">
 									<tr>
 										<td>123456789012</td>
-										<td>某某某</td>
+										<td>某某</td>
+										<td>男</td>
+										<td>信计133班</td>
 									</tr>
 									<tr>
 										<td>987654321098</td>
-										<td>某某</td>
+										<td>某某某</td>
+										<td>女</td>
+										<td>信计133班</td>
 									</tr>
 									<tr>
 										<td>123456789012</td>
 										<td>某某某</td>
+										<td>男</td>
+										<td>测试班级</td>
 									</tr>
 									<tr>
-										<td colspan="2" style="color:red;">注意：目前还不支持2007版的excel，只支持2003的版本</td>
+										<td colspan="4" style="color:red;">注意：目前还不支持2007版的excel，只支持2003的版本</td>
 									</tr>
 								</tbody>
 							</table>
@@ -255,6 +277,69 @@
 			</div>
 			<div class="col-md-2"></div>
 	</div>
+
+	<div class="col-md-7" id="div_issue_course">
+			<div class="col-md-offset-0">
+					<div class="modal-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-md-2" for="add_course_name">课&nbsp;&nbsp;&nbsp;程&nbsp;&nbsp;&nbsp;名&nbsp;&nbsp;&nbsp;称:</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" id="add_course_name" placeholder="请输入课程名">
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label  class="control-label col-md-2" for="load_clazz">班&nbsp;&nbsp;&nbsp;级&nbsp;&nbsp;&nbsp;选&nbsp;&nbsp;&nbsp;择:</label>
+								<div class="col-md-9" id="load_clazz">
+									<select class="form-control" id="select_clazz">
+										<option>信计133班</option>
+										<option>信计134班</option>
+										<option>信计132班</option>
+										<option>信计131班</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-2" for="issue_last_time">授&nbsp;&nbsp;&nbsp;课&nbsp;&nbsp;&nbsp;时&nbsp;&nbsp;&nbsp;间:</label>
+								<!--<div class="col-md-9 input-append date" id="datetimepicker4teach_year" data-date="10-01-2016" data-date-format="yyyy-mm-dd hh:ii:ss">-->
+								<div class="col-md-9 input-append date" id="datetimepicker4teach_year" data-date="10-01-2016" data-date-format="yyyy-mm-dd">
+									<input type="text" class="span2 form-control" id="teach_year" value="2017-04-01">
+									<span class="add-on"><i class="icon-remove"></i></span>
+									<span class="add-on"><i class="icon-th"></i></span>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label  class="control-label col-md-2" for="term_select">学&nbsp;&nbsp;&nbsp;期&nbsp;&nbsp;&nbsp;选&nbsp;&nbsp;&nbsp;择:</label>
+								<div class="col-md-9" id="term_select">
+									<select class="form-control" id="term">
+										<option value="1">第一学期</option>
+										<option value="2">第二学期</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div id="sure_add_course_tips_div" align="center" style="display: none;">
+									<p>
+										<span id="sure_add_course_tips" style="color: red;">添加失败，请重试</span>
+									</p>
+								</div>
+								<div class="col-md-offset-2 col-md-7"></div>
+								<div>
+									<button type="button" id="sure_add_course" class="btn btn-sm btn-success">
+										添加课程&nbsp;<span class="glyphicon glyphicon-ok-sign"></span>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+			<div class="col-md-1"></div>
+	</div>
+
 </div>
 <!-- while cicos login end -->
 
