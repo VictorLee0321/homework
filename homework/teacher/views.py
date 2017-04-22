@@ -23,6 +23,41 @@ sys.setdefaultencoding('utf-8')
 
 # Create your views here.
 
+def cicosGetUnsubmitHomework(request):
+    if request.POST.has_key('task_id'):
+        task_id = request.POST['task_id']
+        course_id = request.POST['course_id']
+        try:
+            finish_student_ids = Finish.objects.all().filter(task_id=task_id).values("student_id")
+            clazz_id = Course.objects.get(course_id=course_id).clazz_id
+            clazz = Clazz.objects.get(clazz_id=clazz_id)
+            clazz_name = clazz.clazz_name
+            clazz_student_unsubmit = Student.objects.all().filter(Q(clazz_id=clazz_id), ~Q(student_id__in=finish_student_ids)).values("student_id", "student_name")
+            print clazz_student_unsubmit
+            for i in clazz_student_unsubmit:
+                i['clazz_name'] = clazz_name
+                print i
+                print type(i)
+            print clazz_student_unsubmit
+            clazz_student_unsubmit = json.dumps(list(clazz_student_unsubmit))
+            return HttpResponse(clazz_student_unsubmit)
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse('none')
+
+def cicosGetOvertimeHomework(request):
+    if request.POST.has_key('task_id'):
+        task_id = request.POST['task_id']
+        try:
+            # return is_overtime=True
+            finishs = Finish.objects.all().filter(task_id=task_id, is_overtime=True).values("file_path")
+            print finishs
+            finishs = json.dumps(list(finishs))
+            return HttpResponse(finishs)
+        except Exception, e:
+            print Exception, ":", e
+            return HttpResponse('none')
+
 def cicosGetSubmitHomework(request):
     if request.POST.has_key('task_id'):
         task_id = request.POST['task_id']

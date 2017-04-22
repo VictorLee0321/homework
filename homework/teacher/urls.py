@@ -32,4 +32,6 @@ urlpatterns = [
     url(r'cicosLoadCourse', views.cicosLoadCourse),
     url(r'cicosLoadExp', views.cicosLoadExp),
     url(r'cicosGetSubmitHomework', views.cicosGetSubmitHomework),
+    url(r'cicosGetUnsubmitHomework', views.cicosGetUnsubmitHomework),
+    url(r'cicosGetOvertimeHomework', views.cicosGetOvertimeHomework),
 ]

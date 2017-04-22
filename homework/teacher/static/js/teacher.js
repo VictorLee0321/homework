@@ -68,6 +68,7 @@ $(function () {
 
 	$("#check_status").change(function() {
 	    var task_id = $("#check_exp option:selected").val();
+	    var course_id = $("#check_course option:selected").val();
 		var account = $.cookie("account");
 		var teacher_id = $.cookie("teacher_id");
 		var course = $("#check_course option:selected").text();
@@ -81,21 +82,17 @@ $(function () {
 			$("#cicos_send_all_email").css("display", "none");
 			break;
 		case "未交":
-			cicosGetUnsubmitHomework(account, course, exp)
+			cicosGetUnsubmitHomework(course_id, task_id);
 			$("#cicos_check_download").css("display", "none");
 			$("#cicos_send_all_email").css("display", "inline-block");
 			break;
 		case "补交":
-			cicosGetOvertimeHomework(account, course, exp);
+			cicosGetOvertimeHomework(task_id);
 			$("#cicos_check_download").css("display", "inline-block");
 			$("#cicos_send_all_email").css("display", "none");
 			break;
 		}
 	});
-
-var cicos_submit_homework;
-var cicos_un_submit_homework;
-var cicos_overtime_homework;
 
 	$("#cicos_next_page").click(function() {
 		var page_row = $("#cicos_check_tbody tr").length;
@@ -146,7 +143,51 @@ var cicos_overtime_homework;
 		}
 	});
 
+	$("#btn_check_homework").click(function() {
+		//var account = getCookie("account");
+		// set status had submit and page num is 1
+		$("#check_status").val("0");
+		$("#cicos_page_num b").html("1");
+		//cicosLoadCourse(account);
+		teacher_id = $.cookie('teacher_id');
+        cicosLoadCourse(teacher_id);
+		// show self div
+		$("#div_check_homework").css("display", "block");
+		$("#cicos_check_download").css("display", "inline-block");
+		$("#cicos_send_all_email").css("display", "none");
+		// hide others cicos div
+		$("#div_issue_homework").css("display", "none");
+		$("#div_add_student").css("display", "none");
+	});
+
+	$("#btn_issue_homework").click(function() {
+		// hide other and set var null
+		cicos_submit_homework = null;
+		cicos_un_submit_homework = null;
+		cicos_overtime_homework = null;
+		$("#div_check_homework").css("display", "none");
+		$("#div_add_student").css("display", "none");
+		// show self
+		$("#div_issue_homework").css("display", "block");
+		$("#sure_add_tips_div").css("display", "none");
+	});
+
+	$(".date").datetimepicker({
+//		format:yyyy-mm-dd,
+		weekStart:1,
+		todayBtn:1,
+		autoclose:1,
+		todayHighlight:1,
+		startView:2,
+		forceParse:0,
+		showMeridian:1,
+	});
+
 });
+
+var cicos_submit_homework;
+var cicos_un_submit_homework;
+var cicos_overtime_homework;
 
 function updatePsw(account, old_psw, new_psw) {
 	$.ajax ({
@@ -241,6 +282,52 @@ function cicosShowTBodyData(data, page_num) {
 		row += "<td><input type=\"checkbox\"></td>";
 		row += "<td>" + rowData + "</td>";
 		row += "<td><button type=\"button\" id=\"btn_down" + (i % 10 + 1) + "\" class=\"btn btn-xs\"><span class=\"glyphicon glyphicon-download\"></span></button></td>";
+		row += "</tr>";
+		$("#cicos_check_tbody").append(row);
+	}
+}
+
+function cicosGetOvertimeHomework(task_id) {
+	$.ajax ({
+		url : "teacher/cicosGetOvertimeHomework",
+		type : "POST",
+		dataType : "json",
+		data : {"task_id":task_id},
+		success : function(data) {
+			var page_num = $("#cicos_page_num b").html();
+			cicos_overtime_homework = data;
+			cicosShowTBodyData(cicos_overtime_homework, page_num);
+		}
+	});
+}
+
+function cicosGetUnsubmitHomework(course_id, task_id) {
+	$.ajax ({
+		url : "/teacher/cicosGetUnsubmitHomework",
+		type : "POST",
+		dataType : "json",
+		data : {"course_id":course_id,"task_id":task_id},
+		success : function(data) {
+			var page_num = $("#cicos_page_num b").html();
+			cicos_un_submit_homework = data;
+			cicosShowTBodyUnsubmitStudent(cicos_un_submit_homework, page_num);
+		}
+	});
+}
+
+function cicosShowTBodyUnsubmitStudent(data, page_num) {
+	$("#cicos_check_thead").empty();
+	var rowHead = "<tr><th></th><th>学号</th><th>姓名</th><th>班别</th><th>通知</th></tr>";
+	$("#cicos_check_thead").append(rowHead);
+	$("#cicos_check_tbody").empty();
+	for (var i = 10 * (page_num - 1); i < 10 * page_num && i < data.length; i++) {
+		var rowData = data[i];
+		var row = "<tr>";
+		row += "<td><input type=\"checkbox\"></td>";
+		row += "<td>" + rowData.student_id + "</td>";
+		row += "<td>" + rowData.student_name + "</td>";
+		row += "<td>" + rowData.clazz_name + "</td>";
+		row += "<td><button type=\"button\" id=\"btn_down" + (i % 10 + 1) + "\" class=\"btn btn-xs\"><span class=\"glyphicon glyphicon-envelope\"></span></button></td>";
 		row += "</tr>";
 		$("#cicos_check_tbody").append(row);
 	}
