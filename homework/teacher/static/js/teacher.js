@@ -295,9 +295,15 @@ function uploadXlsFile(teacher_id, xls_file) {
 				} else if (1 == responseText) {
 					$("#xls_tips").html("名单已存在");
 					$("#xls_tips").css("color", "red");
-				} else {
+				} else if (2 == responseText) {
 					// 导入失败，请重试
+					$("#xls_tips").html("班别有误,请重试");
+					$("#xls_tips").css("color", "red");
+				} else if (3 == responseText) {
 					$("#xls_tips").html("有误,请重试");
+					$("#xls_tips").css("color", "red");
+				} else {
+					$("#xls_tips").html("第" + (responseText - 3 + 1) + "行名单已经存在，此行以上名单已经导入，请重试!!!");
 					$("#xls_tips").css("color", "red");
 				}
 			}

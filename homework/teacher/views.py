@@ -14,6 +14,8 @@ import time
 import sys
 import codecs
 
+import xlrd
+
 from itertools import chain
 
 from anonymous.models import *
@@ -28,8 +30,65 @@ def uploadXlsFile(request):
         teacher_id = request.POST['teacher_id']
         print 'steacher_id: ', teacher_id
         xls_file = request.FILES.get("xls_file", None)
-        return HttpResponse("2")
-    return HttpResponse("2")
+        if not xls_file:
+            print 'no xls_file for upload!'
+            return HttpResponse("no xls_files for upload!")
+        xls_name = xls_file.name
+        print 'xls_file name is: ', str(xls_name)
+        file_save = "/file_homework/upload_xls_file/"
+        if not os.path.exists(file_save):
+            os.makedirs(file_save, mode=0777)
+        destination = codecs.open(os.path.join(file_save, str(xls_name)), 'wb+')  # 打开特定的文件进行二进制的写操作
+        for chunk in xls_file.chunks():  # 分块写入文件
+            destination.write(chunk)
+        destination.close()
+        print 'write finish by codecs---------------------'
+        print 'in xlrd operate begin---'
+        xls_path = file_save + str(xls_name)
+        bk = xlrd.open_workbook(xls_path)
+        try:
+            #sh = bk.sheet_by_name("Sheet1") # get from name
+            sh = bk.sheets()[0]
+        except Exception, e:
+            print Exception, ":", e
+            ret_str =  "no sheet in %s, please check it" % xls_name
+            print ret_str
+            return HttpResponse(ret_str)
+        nrows = sh.nrows
+        #ncols = sh.ncols
+        #stu_id, stu_name, sex, clazz_name = 'default'
+        for i in range(nrows):
+            if (0 == i):
+                continue
+            #for j in range(ncols):
+            #    print i,j
+            #    print sh.cell(i, j).value,
+            #    a = sh.cell(i, j).value,
+            #    print type(a)
+            #    b = str(a)
+            #    print b,type(b)
+            stu_id = str(sh.cell(i, 0).value)
+            stu_name = str(sh.cell(i, 1).value)
+            sex_name = str(sh.cell(i, 2).value)
+            sex = 1
+            if "女" == sex_name:
+                sex = 0
+            clazz_name = str(sh.cell(i, 3).value)
+            try:
+                clazz_id = Clazz.objects.get(clazz_name=clazz_name).clazz_id
+            except Exception, e:
+                print Exception, ":", e
+                return HttpResponse("2")
+            aready_stu = Student.objects.filter(student_id=stu_id)
+            if len(aready_stu) > 0:
+                print 'this student had exist!!!'
+                ret_txt = 3 + i
+                return HttpResponse(ret_txt)
+            clazz = Clazz.objects.get(clazz_name=clazz_name)
+            Student.objects.create(student_id=stu_id, student_name=stu_name, sex=sex, clazz_id=clazz)
+        print 'in xlrd operate end------'
+        return HttpResponse("0")
+    return HttpResponse("3")
 
 def cicosGetUnsubmitHomework(request):
     if request.POST.has_key('task_id'):
