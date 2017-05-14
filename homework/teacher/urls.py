@@ -38,4 +38,5 @@ urlpatterns = [
     url(r'teacherLoadClazz', views.teacherLoadClazz),
     url(r'teacherAddCourse', views.teacherAddCourse),
     url(r'uploadXlsFile', views.uploadXlsFile),
+    url(r'cicos_check_download_all', views.cicos_check_download_all),
 ]

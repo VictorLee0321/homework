@@ -125,6 +125,30 @@ def cicosGetOvertimeHomework(request):
             print Exception, ":", e
             return HttpResponse('none')
 
+def cicos_check_download_all(request):
+    if request.POST.has_key('task_id'):
+        task_id = request.POST['task_id']
+        is_overtime = request.POST['is_overtime']
+        print is_overtime, type(is_overtime)
+        if ("1" == is_overtime):
+            is_overtime = True
+        else:
+            is_overtime = False
+        print is_overtime, type(is_overtime)
+        if (is_overtime):
+            print is_overtime, type(is_overtime)
+            file_paths = Finish.objects.all().filter(task_id=task_id, is_overtime=is_overtime).values("file_path")
+        else:
+            file_paths = Finish.objects.all().filter(task_id=task_id).values("file_path")
+
+        print file_paths
+        file_paths = json.dumps(list(file_paths))
+        print file_paths
+
+
+        return HttpResponse('none')
+
+
 def cicosGetSubmitHomework(request):
     if request.POST.has_key('task_id'):
         task_id = request.POST['task_id']

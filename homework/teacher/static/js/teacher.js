@@ -68,6 +68,7 @@ $(function () {
 
 	$("#check_status").change(function() {
 	    var task_id = $("#check_exp option:selected").val();
+	    console.log("task_id in check_status change function is: " + task_id);
 	    var course_id = $("#check_course option:selected").val();
 		var account = $.cookie("account");
 		var teacher_id = $.cookie("teacher_id");
@@ -93,6 +94,44 @@ $(function () {
 			break;
 		}
 	});
+
+	$("#cicos_check_download").click(function () {
+		var task_id = $("#check_exp option:selected").val();
+		console.log('click all_download button and select task_id: ' + task_id);
+		if (null == task_id) {
+			console.log("select task_id is null");
+			// null the table
+			/*$("#cicos_check_thead").empty();
+			var rowHead = "<tr><th></th><th>作业未选择</th><th></th></tr>";
+			$("#cicos_check_thead").append(rowHead);
+			$("#cicos_check_tbody").empty();*/
+			return false;
+		} else {
+			console.log('click download all and task_id is:' + task_id);
+			var status = $("#check_status option:selected").text();
+			console.log("status is: " + status);
+			var is_overtime = 0;
+			if ("已交" == status) {
+				console.log("status is 已交 is right and status is: " + status);
+			} else {
+				is_overtime = 1;
+				console.log("status is 补交 and status is: " + status);
+			}
+			$.ajax ({
+                url: "/teacher/cicos_check_download_all",
+                type: "POST",
+                dataType: "text",
+                data: {
+                    "task_id": task_id,
+                    "is_overtime": is_overtime
+                },
+                success: function (data) {
+
+                }
+            });
+		}
+	});
+
 
 	$("#cicos_next_page").click(function() {
 		var page_row = $("#cicos_check_tbody tr").length;
@@ -470,6 +509,15 @@ function cicosLoadExp(course_id) {
 			}
 			var task_id = $("#check_exp option:selected").val();
 			console.log('select task_id: ' + task_id);
+			if (null == task_id) {
+				console.log("select task_id is null");
+				// null the table
+				$("#cicos_check_thead").empty();
+				var rowHead = "<tr><th></th><th>作业未选择</th><th></th></tr>";
+				$("#cicos_check_thead").append(rowHead);
+				$("#cicos_check_tbody").empty();
+				return false;
+			}
 			// show had submit homework status
 			cicosGetSubmitHomework(task_id);
 		}
