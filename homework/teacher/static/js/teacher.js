@@ -120,13 +120,15 @@ $(function () {
 			$.ajax ({
                 url: "/teacher/cicos_check_download_all",
                 type: "POST",
-                dataType: "text",
+                //dataType: "text",
                 data: {
                     "task_id": task_id,
                     "is_overtime": is_overtime
                 },
                 success: function (data) {
-
+					alert(data);
+					//window.location.href = data;
+					//window.location.href = '/file_homework/23/201321314300-李明-007测试课程1-测试作业1.docx';
                 }
             });
 		}

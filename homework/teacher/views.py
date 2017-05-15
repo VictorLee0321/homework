@@ -20,6 +20,13 @@ from itertools import chain
 
 from anonymous.models import *
 
+import os, tempfile, zipfile
+from django.http import HttpResponse
+#from django.core.servers.basehttp import FileWrapper
+from wsgiref.util import FileWrapper
+
+from django.http import StreamingHttpResponse
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -140,13 +147,60 @@ def cicos_check_download_all(request):
             file_paths = Finish.objects.all().filter(task_id=task_id, is_overtime=is_overtime).values("file_path")
         else:
             file_paths = Finish.objects.all().filter(task_id=task_id).values("file_path")
+        for i in file_paths:
+            print i['file_path']
+        #print file_paths
+        #file_paths = json.dumps(list(file_paths))
+        #print file_paths
+        #temp = tempfile.TemporaryFile()
+        #archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
+        down_file_name = 'download_all.zip'
+        archive = zipfile.ZipFile(down_file_name, 'w', zipfile.ZIP_DEFLATED)
+        for index in file_paths:
+            filename = index['file_path']  # Select your files here.
+            #archive.write(filename, 'file%d.txt' % index)
+            archive.write(filename)
+        archive.close()
+        #wrapper = FileWrapper(temp)
+        #response = HttpResponse(wrapper, content_type='application/zip')
+        #response['Content-Type'] = 'application/zip'
+        #response['Content-Disposition'] = 'attachment; filename=download_all.zip'
+        #response['Content-Length'] = temp.tell()
+        #print temp.tell(), 'aaaaaaaaaaaa'
+        #temp.seek(0)
+        #archive.close()
 
-        print file_paths
-        file_paths = json.dumps(list(file_paths))
-        print file_paths
+        # #wrapper = FileWrapper(file('filepath'))
+        # wrapper = FileWrapper(file(down_file_name))
+        # response = HttpResponse(wrapper, content_type='application/octet-stream')
+        # #response['Content-Length'] = os.path.getsize(path)
+        # response['Content-Disposition'] = 'attachment; filename=%s' % filename
+        # return response
 
+        def file_iterator(file_name, chunk_size=512):
+            with open(file_name) as f:
+                while True:
+                    c = f.read(chunk_size)
+                    if c:
+                        yield c
+                    else:
+                        break
 
+        the_file_name = down_file_name
+        response = StreamingHttpResponse(file_iterator(the_file_name))
+        #response['Content-Type'] = 'application/octet-stream'
+        response['Content-Type'] = 'application/zip'
+        response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+
+        return response
         return HttpResponse('none')
+
+        #response.write(wrapper)
+        #response.flush()
+        #print response
+        #return response
+
+        #return HttpResponse('none')
 
 
 def cicosGetSubmitHomework(request):
