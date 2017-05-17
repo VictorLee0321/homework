@@ -16,12 +16,16 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from teacher import views
+
 urlpatterns = [
     url(r'student', include('student.urls', namespace='student')),
 
     url(r'teacher', include('teacher.urls', namespace='teacher')),
 
     url(r'^admin/', admin.site.urls),
+
+    url(r'^download/filename=(?P<filename>.{1,500})/$', views.get_download_all),
 
     url(r'^', include('anonymous.urls', namespace='anonymous')),
 

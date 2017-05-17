@@ -18,6 +18,9 @@ import xlrd
 
 from itertools import chain
 
+import mimetypes
+from django.conf import settings
+
 from anonymous.models import *
 
 import os, tempfile, zipfile
@@ -149,9 +152,6 @@ def cicos_check_download_all(request):
             file_paths = Finish.objects.all().filter(task_id=task_id).values("file_path")
         for i in file_paths:
             print i['file_path']
-        #print file_paths
-        #file_paths = json.dumps(list(file_paths))
-        #print file_paths
         #temp = tempfile.TemporaryFile()
         #archive = zipfile.ZipFile(temp, 'w', zipfile.ZIP_DEFLATED)
         down_file_name = 'download_all.zip'
@@ -166,42 +166,80 @@ def cicos_check_download_all(request):
         #response['Content-Type'] = 'application/zip'
         #response['Content-Disposition'] = 'attachment; filename=download_all.zip'
         #response['Content-Length'] = temp.tell()
-        #print temp.tell(), 'aaaaaaaaaaaa'
         #temp.seek(0)
         #archive.close()
 
         # #wrapper = FileWrapper(file('filepath'))
+        # #response['Content-Length'] = os.path.getsize(path)
+        #response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
         # wrapper = FileWrapper(file(down_file_name))
         # response = HttpResponse(wrapper, content_type='application/octet-stream')
-        # #response['Content-Length'] = os.path.getsize(path)
-        # response['Content-Disposition'] = 'attachment; filename=%s' % filename
+        # response['Content-Disposition'] = 'attachment; filename=%s' % down_file_name
         # return response
 
-        def file_iterator(file_name, chunk_size=512):
-            with open(file_name) as f:
-                while True:
-                    c = f.read(chunk_size)
-                    if c:
-                        yield c
-                    else:
-                        break
+        # def file_iterator(file_name, chunk_size=512):
+        #     with open(file_name, 'rb') as f:
+        #         while True:
+        #             c = f.read(chunk_size)
+        #             if c:
+        #                 yield c
+        #             else:
+        #                 break
 
-        the_file_name = down_file_name
-        response = StreamingHttpResponse(file_iterator(the_file_name))
-        #response['Content-Type'] = 'application/octet-stream'
-        response['Content-Type'] = 'application/zip'
-        response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+        # the_file_name = down_file_name
+        # response = StreamingHttpResponse(file_iterator(the_file_name))
+        # response['Content-Type'] = 'application/octet-stream'
+        # #response['Content-Type'] = 'application/zip'
+        # response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+        # #return response
+        # #return HttpResponse(the_file_name)
+        return HttpResponse(down_file_name)
+        # print down_file_name
+        # with open(down_file_name) as f:
+        #     data = f.read()
+        # response = HttpResponse(data, content_type='application/octet-stream')
+        # response['Content-Disposition'] = 'attachment;filename=%s' % os.path.basename(down_file_name)
+        # return response
 
-        return response
-        return HttpResponse('none')
+        # 下载文件
+        # def readFile(fn, buf_size=262144):  # 大文件下载，设定缓存大小
+        #     f = open(fn, "rb")
+        #     while True:
+        #         c = f.read(buf_size)
+        #         if c:
+        #             yield c
+        #         else:
+        #             break
+        #     f.close()
+
+        # the_file_name = down_file_name
+        # filetype_ = 'zip'
+        # filepath = '/home/victorlee/graduation_project/homework/homework/download_all.zip'
+        # #response = HttpResponse(readFile(filepath), content_type='APPLICATION/OCTET-STREAM')
+        # response = HttpResponse('none', content_type='APPLICATION/OCTET-STREAM')
+        # response = HttpResponse()
+        # #response['Header'] = "Content-type:text/html;charset=utf-8"
+        # response['Content-Disposition'] = 'attachment; filename=' + the_file_name.encode('utf-8')  # 设定传输给客户端的文件名称
+        # response['Content-Length'] = os.path.getsize(filepath)  # 传输给客户端的文件大小
+        # return response
 
         #response.write(wrapper)
         #response.flush()
-        #print response
         #return response
 
         #return HttpResponse('none')
 
+def get_download_all(request, filename):
+    #filepath = os.path.join('/home/victorlee/graduation_project/homework/homework', filename)
+    filepath = os.path.join(settings.MEDIA_ROOT, filename)
+    print (filepath), '--------------------------------------'
+    wrapper = FileWrapper(open(filepath, 'rb'))
+    #content_type = mimetypes.guess_type(filepath)[0]
+    #response = HttpResponse(wrapper, mimetype='content_type')
+    response = HttpResponse(wrapper, content_type='application/octet-stream')
+    response['Content-Disposition'] = "attachment; filename=%s" % filename
+    return response
 
 def cicosGetSubmitHomework(request):
     if request.POST.has_key('task_id'):

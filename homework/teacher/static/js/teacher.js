@@ -126,7 +126,12 @@ $(function () {
                     "is_overtime": is_overtime
                 },
                 success: function (data) {
-					alert(data);
+                	if (data.length > 0) {
+                		console.log(data);
+                		window.location.href = '/download/filename=' + data;
+					}
+                	//console.log(data);
+					//alert(data);
 					//window.location.href = data;
 					//window.location.href = '/file_homework/23/201321314300-李明-007测试课程1-测试作业1.docx';
                 }
